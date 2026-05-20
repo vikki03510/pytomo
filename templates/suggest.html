@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Запропонувати відповідник | Платформа Питомо</title>
+
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/suggest.css') }}">
+</head>
+
+<body>
+
+<header class="header">
+
+  <img class="logo"
+       src="{{ url_for('static', filename='images/Лого.svg') }}"
+       alt="Платформа Питомо" />
+
+  <nav class="nav">
+
+    <a href="{{ url_for('home') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_home.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Домашня</span>
+        <small>Основна інформація</small>
+      </div>
+
+    </a>
+
+    <a href="{{ url_for('dictionary') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_словник.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Словник</span>
+        <small>Англізми та відповідники</small>
+      </div>
+
+    </a>
+
+    <a href="{{ url_for('improve') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_text_improvement.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Покращити текст</span>
+        <small>Прибрати англізми з тексту</small>
+      </div>
+
+    </a>
+
+  </nav>
+
+</header>
+
+<main>
+
+  <section class="suggest-card">
+
+    <div class="suggest-top">
+
+      <div class="suggest-title">
+        Наша платформа зростає
+      </div>
+
+      <div class="top-dark">
+
+        <img src="{{ url_for('static', filename='images/Лого_small.svg') }}"
+             alt="" />
+
+      </div>
+
+    </div>
+
+    <div class="suggest-content">
+
+      <div class="visual-block">
+
+        <img src="{{ url_for('static', filename='images/spiral_circle.gif') }}"
+             alt="Анімована спіраль" />
+
+      </div>
+
+      <form class="suggest-form">
+
+        <label>
+
+          <span class="label-title">
+            Е-пошта
+
+            <img src="{{ url_for('static', filename='images/mandatory_icon.svg') }}"
+                 alt="Обов’язкове поле" />
+          </span>
+
+          <input type="email"
+                 placeholder="tarasshevchenko@gmail.com" />
+
+        </label>
+
+        <label>
+
+          <span class="label-title">
+            Англізм (слово або словосполучення)
+
+            <img src="{{ url_for('static', filename='images/mandatory_icon.svg') }}"
+                 alt="Обов’язкове поле" />
+
+          </span>
+
+          <input type="text"
+                 placeholder="Гайпувати" />
+
+        </label>
+
+        <label>
+
+          Інші варіянти написання англізма
+
+          <input type="text"
+                 placeholder="Хайпувати" />
+
+        </label>
+
+        <label>
+
+          Визначення англізма
+
+          <textarea placeholder="Штучно створювати ажіотаж, розголос або галас навколо певної теми..."></textarea>
+
+        </label>
+
+        <label>
+
+          <span class="label-title">
+
+            Відповідники через кому
+
+            <img src="{{ url_for('static', filename='images/mandatory_icon.svg') }}"
+                 alt="Обов’язкове поле" />
+
+          </span>
+
+          <input type="text"
+                 placeholder="Галасувати, здіймати галас" />
+
+        </label>
+
+        <label>
+
+          Визначення відповідників через кому
+
+          <textarea placeholder="Виявляти підвищений інтерес до якого-небудь питання..."></textarea>
+
+        </label>
+
+        <button type="submit">
+          Надіслати
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+
+  <div class="footer-links">
+
+    <a href="{{ url_for('about') }}">
+      Про нас
+    </a>
+
+    <a href="{{ url_for('contacts') }}">
+      Контакти
+    </a>
+
+  </div>
+
+  <div class="footer-bottom">
+    Розробили Фещак Анастасія та Грищук Вікторія
+  </div>
+
+</footer>
+
+</body>
+</html>

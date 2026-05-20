@@ -1,0 +1,367 @@
+:root {
+  --bg: #f8f8f7;
+  --beige: #ccc0b2;
+  --brown: #7d6960;
+  --dark: #22080b;
+  --yellow: #dbd189;
+  --wine: #540b14;
+  --active: #d6bdc0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--dark);
+  font-family: "Noto Sans Hebrew New", Arial, sans-serif;
+}
+
+.admin-header {
+  width: 1100px;
+  margin: 35px auto 0;
+}
+
+.logo {
+  display: block;
+  width: 835px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.admin-nav {
+  width: 1100px;
+  height: 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 2px solid var(--brown);
+  border-radius: 7px;
+  overflow: hidden;
+  background: var(--bg);
+  position: relative;
+}
+
+.admin-nav::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--active);
+  border-radius: 7px;
+  transition: all 0.35s ease;
+  z-index: 0;
+
+  width: 360px;
+  transform: translateX(0);
+}
+
+.admin-nav:has(.admin-nav-item:nth-child(1):hover)::before {
+  width: 360px;
+  transform: translateX(0);
+}
+
+.admin-nav:has(.admin-nav-item:nth-child(2):hover)::before {
+  width: 330px;
+  transform: translateX(390px);
+}
+
+.admin-nav:has(.admin-nav-item:nth-child(3):hover)::before {
+  width: 400px;
+  transform: translateX(700px);
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-decoration: none;
+  color: var(--dark);
+  position: relative;
+  z-index: 1;
+}
+
+.admin-nav-item.active,
+.admin-nav-item:hover {
+  background: transparent;
+}
+
+.admin-nav-item img {
+  width: 34px;
+  height: 34px;
+}
+
+.admin-nav-item span {
+  font-family: "Nastup Soft", Impact, sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+
+.admin-nav-item small {
+  display: block;
+  margin-top: 4px;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--brown);
+  text-align: center;
+}
+
+.admin-search-section {
+  width: 1100px;
+  margin: 36px auto 0;
+}
+
+.admin-search-form {
+  width: 100%;
+  height: 58px;
+  display: grid;
+  grid-template-columns: 1fr 64px;
+  border: 2px solid var(--brown);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.admin-search-form input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0 22px;
+  font-size: 18px;
+  color: var(--dark);
+}
+
+.admin-search-form input::placeholder {
+  color: var(--beige);
+}
+
+.admin-search-form button {
+  border: none;
+  background: var(--yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.admin-search-form button img {
+  width: 34px;
+  height: 34px;
+}
+
+.alphabet-section {
+  height: 245px;
+  margin-top: 36px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alphabet-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.alphabet-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.alphabet-row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.alphabet-buttons button {
+  width: 44px;
+  height: 44px;
+  border: 2px solid white;
+  border-radius: 999px;
+  background: transparent;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.alphabet-buttons button:hover {
+  background: #DBD189;
+  border-color: #DBD189;
+  color: #540b14;
+}
+
+.alphabet-buttons .letter-active {
+  background: #540B14;
+  border-color: white;
+  color: white;
+}
+
+.alphabet-buttons .letter-active:hover {
+  background: #DBD189;
+  border-color: #DBD189;
+  color: #540b14;
+}
+
+.database-section {
+  width: 1100px;
+  margin: 42px auto 70px;
+}
+
+.database-header {
+  height: 72px;
+  background: var(--yellow);
+  border: 2px solid var(--brown);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+
+  display: grid;
+  grid-template-columns: 1fr 250px;
+  align-items: center;
+  padding-left: 74px;
+}
+
+.database-header h1 {
+  margin: 0;
+  font-family: "Nastup Soft", Impact, sans-serif;
+  font-size: 24px;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+
+.add-button {
+  height: 64px;
+  margin-right: 12px;
+  border: none;
+  border-radius: 32px;
+  background: var(--wine);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.add-button:hover {
+  background: var(--yellow);
+  color: var(--wine);
+  outline: 2px solid var(--wine);
+}
+
+.add-button img {
+  width: 26px;
+  height: 26px;
+}
+
+.database-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.word-row {
+  height: 52px;
+  border: 2px solid var(--brown);
+  border-radius: 8px;
+
+  display: grid;
+  grid-template-columns: 1fr 110px;
+  align-items: center;
+  padding-left: 30px;
+  margin-top: -2px;
+  background: var(--bg);
+}
+
+.word-row:nth-child(odd) {
+  margin-right: -1px;
+}
+
+.word-row:nth-child(even) {
+  margin-left: -1px;
+}
+
+.word-row span {
+  font-family: "Nastup Soft", Impact, sans-serif;
+  font-size: 22px;
+  text-transform: uppercase;
+  color: var(--dark);
+}
+
+.actions {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+}
+
+.actions button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.actions img {
+  width: 28px;
+  height: 28px;
+}
+
+.actions button img {
+  width: 28px;
+  height: 28px;
+  transition: filter 0.25s ease;
+}
+
+.actions button:hover img {
+  filter: brightness(0) saturate(100%) invert(84%) sepia(21%) saturate(509%) hue-rotate(11deg) brightness(97%) contrast(89%);
+}
+
+.pagination {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
+.page-button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: "Nastup Soft", Impact, sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  color: #540B14;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.page-button.active-page:hover {
+  color: #DBD189;
+}
+
+.page-button.disabled {
+  color: #CCC0B2;
+  cursor: default;
+  pointer-events: none;
+}
+
+.page-button.current-page {
+  color: #CCC0B2;
+}

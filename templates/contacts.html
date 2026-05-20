@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Контакти | Платформа Питомо</title>
+
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/contacts.css') }}">
+</head>
+
+<body>
+
+<header class="header">
+
+  <img class="logo"
+       src="{{ url_for('static', filename='images/Лого.svg') }}"
+       alt="Платформа Питомо" />
+
+  <nav class="nav">
+
+    <a href="{{ url_for('home') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_home.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Домашня</span>
+        <small>Основна інформація</small>
+      </div>
+
+    </a>
+
+    <a href="{{ url_for('dictionary') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_словник.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Словник</span>
+        <small>Англізми та відповідники</small>
+      </div>
+
+    </a>
+
+    <a href="{{ url_for('improve') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_text_improvement.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Покращити текст</span>
+        <small>Прибрати англізми з тексту</small>
+      </div>
+
+    </a>
+
+  </nav>
+
+</header>
+
+<main>
+
+  <section class="contact-card">
+
+    <div class="contact-top">
+
+      <div class="contact-logo-box">
+
+        <img src="{{ url_for('static', filename='images/Лого_small.svg') }}"
+             alt="" />
+
+      </div>
+
+      <div class="contact-top-fill"></div>
+
+    </div>
+
+    <form class="contact-form">
+
+      <div class="form-row">
+
+        <label>
+
+          <span class="field-title">
+
+            Ім’я
+
+            <img src="{{ url_for('static', filename='images/mandatory_icon.svg') }}"
+                 alt="Обов’язкове поле" />
+
+          </span>
+
+          <input type="text"
+                 placeholder="Тарас" />
+
+        </label>
+
+        <label>
+
+          Прізвище
+
+          <input type="text"
+                 placeholder="Шевченко" />
+
+        </label>
+
+      </div>
+
+      <div class="form-row">
+
+        <label>
+
+          <span class="field-title">
+
+            Е-пошта
+
+            <img src="{{ url_for('static', filename='images/mandatory_icon.svg') }}"
+                 alt="Обов’язкове поле" />
+
+          </span>
+
+          <input type="email"
+                 placeholder="tarasshevchenko@gmail.com" />
+
+        </label>
+
+        <label>
+
+          Інші контакти
+
+          <input type="text"
+                 placeholder="+380123456789" />
+
+        </label>
+
+      </div>
+
+      <label class="message-label">
+
+        Повідомлення
+
+        <textarea placeholder="Дуже сподобалась платформа “Питомо”..."></textarea>
+
+      </label>
+
+      <button type="submit">
+        Надіслати
+      </button>
+
+    </form>
+
+  </section>
+
+  <section class="suggest-banner">
+
+    <h2>
+      Знайшов англізм?<br>
+      Запропонуй відповідник
+    </h2>
+
+    <a href="{{ url_for('suggest') }}"
+       class="main-button">
+
+      Запропонувати англізм
+
+    </a>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+
+  <div class="footer-links">
+
+    <a href="{{ url_for('about') }}">
+      Про нас
+    </a>
+
+    <a href="{{ url_for('contacts') }}"
+       class="active-footer">
+
+      Контакти
+
+    </a>
+
+  </div>
+
+  <div class="footer-bottom">
+    Розробили Фещак Анастасія та Грищук Вікторія
+  </div>
+
+</footer>
+
+</body>
+</html>

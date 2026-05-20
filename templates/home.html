@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Платформа Питомо</title>
+
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+
+<body>
+
+<header class="header">
+
+  <img class="logo"
+       src="{{ url_for('static', filename='images/Лого.svg') }}"
+       alt="Платформа Питомо" />
+
+  <nav class="nav">
+
+    <a href="{{ url_for('home') }}"
+       class="nav-item active">
+
+      <img src="{{ url_for('static', filename='images/іконка_home.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Домашня</span>
+        <small>Основна інформація</small>
+      </div>
+
+    </a>
+
+    <a href="{{ url_for('dictionary') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_словник.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Словник</span>
+        <small>Англізми та відповідники</small>
+      </div>
+
+    </a>
+
+    <a href="{{ url_for('improve') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_text_improvement.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Покращити текст</span>
+        <small>Прибрати англізми з тексту</small>
+      </div>
+
+    </a>
+
+  </nav>
+
+</header>
+
+<main>
+
+  <section class="cards-section">
+
+    <article class="word-card">
+
+      <div class="card-top">
+
+        <div class="card-label">
+          Слово<br>дня
+        </div>
+
+        <img class="card-small-logo"
+             src="{{ url_for('static', filename='images/Лого_small.svg') }}"
+             alt="" />
+
+      </div>
+
+      <div class="word-content">
+
+        <h2>девелопер</h2>
+
+        <p class="equivalent">
+          Відповідники:
+          <span>розробник</span>
+        </p>
+
+        <div class="tag">/іменник/</div>
+
+        <p class="definition">
+          Підприємець/організація, що ініціює і забезпечує реалізацію...
+          <a href="#">Читати більше</a>
+        </p>
+
+        <button class="small-button">
+          Поділитись
+        </button>
+
+      </div>
+
+    </article>
+
+    <article class="count-card">
+
+      <div class="count-title">
+        # Кількість англізмів
+      </div>
+
+      <div class="digits">
+        <span></span>
+        <span></span>
+        <span>2</span>
+        <span>5</span>
+        <span>4</span>
+      </div>
+
+      <p class="count-text">
+        Англізми додані до нашої платформи
+      </p>
+
+      <a href="{{ url_for('dictionary') }}"
+         class="wide-button">
+
+        Дивитись усі слова
+
+      </a>
+
+      <a href="{{ url_for('suggest') }}"
+         class="wide-button">
+
+        Запропонувати англізм
+
+      </a>
+
+    </article>
+
+  </section>
+
+  <section class="popular-section">
+
+    <h2>Щойно додані англізми</h2>
+
+    <div class="popular-strip">
+
+      <div class="popular-track">
+
+        <span>фейл</span>
+        <span>кейс</span>
+        <span>булінг</span>
+        <span>лінк</span>
+        <span>скриншот</span>
+        <span>тренінг</span>
+        <span>слайд</span>
+        <span>білборд</span>
+
+        <span>фейл</span>
+        <span>кейс</span>
+        <span>булінг</span>
+        <span>лінк</span>
+        <span>скриншот</span>
+        <span>тренінг</span>
+        <span>слайд</span>
+        <span>білборд</span>
+
+        <span>фейл</span>
+        <span>кейс</span>
+        <span>булінг</span>
+        <span>лінк</span>
+        <span>скриншот</span>
+        <span>тренінг</span>
+        <span>слайд</span>
+        <span>білборд</span>
+
+        <span>фейл</span>
+        <span>кейс</span>
+        <span>булінг</span>
+        <span>лінк</span>
+        <span>скриншот</span>
+        <span>тренінг</span>
+        <span>слайд</span>
+        <span>білборд</span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="suggest-banner">
+
+    <h2>
+      Знайшов англізм?<br>
+      Запропонуй відповідник
+    </h2>
+
+    <a href="{{ url_for('suggest') }}"
+       class="main-button">
+
+      Запропонувати англізм
+
+    </a>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+
+  <div class="footer-links">
+
+    <a href="{{ url_for('about') }}">
+      Про нас
+    </a>
+
+    <a href="{{ url_for('contacts') }}">
+      Контакти
+    </a>
+
+  </div>
+
+  <div class="footer-bottom">
+    Розробили Фещак Анастасія та Грищук Вікторія
+  </div>
+
+</footer>
+
+</body>
+</html>

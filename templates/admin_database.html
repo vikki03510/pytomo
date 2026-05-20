@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Адмін | База даних</title>
+
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/admin_database.css') }}">
+</head>
+
+<body>
+
+<header class="admin-header">
+
+  <img class="logo"
+       src="{{ url_for('static', filename='images/Лого.svg') }}"
+       alt="Платформа Питомо" />
+
+  <nav class="admin-nav">
+
+    <a href="{{ url_for('admin') }}"
+       class="admin-nav-item active">
+
+      <img src="{{ url_for('static', filename='images/іконка_база_даних.svg') }}"
+           alt="" />
+
+      <div>
+        <span>База даних</span>
+        <small>Редагувати базу</small>
+      </div>
+
+    </a>
+
+    <a href="#"
+       class="admin-nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_лампочка.svg') }}"
+           alt="" />
+
+      <div>
+        <span>Пропозиції</span>
+        <small>Ідеї відповідників</small>
+      </div>
+
+    </a>
+
+    <a href="#"
+       class="admin-nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_повідомлення.svg') }}"
+           alt="" />
+
+      <div>
+        <span>Повідомлення</span>
+        <small>Зв’язок із користувачами</small>
+      </div>
+
+    </a>
+
+  </nav>
+
+</header>
+
+<main>
+
+  <section class="admin-search-section">
+
+    <form class="admin-search-form">
+
+      <input type="text"
+             placeholder="Введіть англізм для пошуку" />
+
+      <button type="submit"
+              aria-label="Пошук">
+
+        <img src="{{ url_for('static', filename='images/іконка_пошук.svg') }}"
+             alt="" />
+
+      </button>
+
+    </form>
+
+  </section>
+
+  <section class="alphabet-section">
+
+    <img class="alphabet-bg"
+         src="{{ url_for('static', filename='images/alphabet_background.svg') }}"
+         alt="" />
+
+    <div class="alphabet-buttons">
+
+      <div class="alphabet-row">
+
+        <button class="letter-active">А</button>
+        <button>Б</button>
+        <button>В</button>
+        <button>Г</button>
+        <button>Ґ</button>
+        <button>Д</button>
+        <button>Е</button>
+        <button>Є</button>
+        <button>Ж</button>
+        <button>З</button>
+        <button>И</button>
+        <button>І</button>
+        <button>Ї</button>
+        <button>Й</button>
+        <button>К</button>
+        <button>Л</button>
+        <button>М</button>
+
+      </div>
+
+      <div class="alphabet-row">
+
+        <button>Н</button>
+        <button>О</button>
+        <button>П</button>
+        <button>Р</button>
+        <button>С</button>
+        <button>Т</button>
+        <button>У</button>
+        <button>Ф</button>
+        <button>Х</button>
+        <button>Ц</button>
+        <button>Ч</button>
+        <button>Ш</button>
+        <button>Щ</button>
+        <button>Ь</button>
+        <button>Ю</button>
+        <button>Я</button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="database-section">
+
+    <div class="database-header">
+
+      <h1>
+        База даних англізмів та відповідників
+      </h1>
+
+      <button class="add-button">
+
+        <img src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
+             alt="" />
+
+        Додати англізм
+
+      </button>
+
+    </div>
+
+    <div class="database-grid">
+
+      <div class="word-row">
+
+        <span>апгрейд</span>
+
+        <div class="actions">
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                 alt="Редагувати" />
+          </button>
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
+                 alt="Видалити" />
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="word-row">
+
+        <span>блеймити</span>
+
+        <div class="actions">
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                 alt="Редагувати" />
+          </button>
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
+                 alt="Видалити" />
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="word-row">
+
+        <span>апгрейдити</span>
+
+        <div class="actions">
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                 alt="Редагувати" />
+          </button>
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
+                 alt="Видалити" />
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="word-row">
+
+        <span>букати</span>
+
+        <div class="actions">
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                 alt="Редагувати" />
+          </button>
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
+                 alt="Видалити" />
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="word-row">
+
+        <span>апгрейднутий</span>
+
+        <div class="actions">
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                 alt="Редагувати" />
+          </button>
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
+                 alt="Видалити" />
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="word-row">
+
+        <span>буккросинг</span>
+
+        <div class="actions">
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                 alt="Редагувати" />
+          </button>
+
+          <button>
+            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
+                 alt="Видалити" />
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="pagination">
+
+      <button class="page-button disabled"
+              type="button">«</button>
+
+      <button class="page-button disabled"
+              type="button">‹</button>
+
+      <button class="page-button disabled current-page"
+              type="button">1</button>
+
+      <button class="page-button active-page"
+              type="button">2</button>
+
+      <button class="page-button active-page"
+              type="button">3</button>
+
+      <button class="page-button active-page"
+              type="button">4</button>
+
+      <button class="page-button active-page"
+              type="button">›</button>
+
+      <button class="page-button active-page"
+              type="button">»</button>
+
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+</html>

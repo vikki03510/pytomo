@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Словник | Платформа Питомо</title>
+
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/dictionary.css') }}">
+</head>
+
+<body>
+
+<header class="header">
+
+  <img class="logo"
+       src="{{ url_for('static', filename='images/Лого.svg') }}"
+       alt="Платформа Питомо" />
+
+  <nav class="nav">
+
+    <a href="{{ url_for('home') }}" class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_home.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Домашня</span>
+        <small>Основна інформація</small>
+      </div>
+
+    </a>
+
+    <a href="{{ url_for('dictionary') }}"
+       class="nav-item active">
+
+      <img src="{{ url_for('static', filename='images/іконка_словник.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Словник</span>
+        <small>Англізми та відповідники</small>
+      </div>
+
+    </a>
+
+    <a href="{{ url_for('improve') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_text_improvement.svg') }}"
+           alt="" />
+
+      <div class="nav-text">
+        <span>Покращити текст</span>
+        <small>Прибрати англізми з тексту</small>
+      </div>
+
+    </a>
+
+  </nav>
+
+</header>
+
+<main>
+
+  <section class="search-section">
+
+    <form class="search-form">
+
+      <input type="text"
+             placeholder="Введіть англізм для пошуку" />
+
+      <button type="submit" aria-label="Пошук">
+
+        <img src="{{ url_for('static', filename='images/іконка_пошук.svg') }}"
+             alt="" />
+
+      </button>
+
+    </form>
+
+  </section>
+
+  <section class="alphabet-section">
+
+    <img class="alphabet-bg"
+         src="{{ url_for('static', filename='images/alphabet_background.svg') }}"
+         alt="" />
+
+    <div class="alphabet-buttons">
+
+      <div class="alphabet-row">
+
+        <button class="all-button">Все</button>
+
+        <button class="letter-active">А</button>
+        <button>Б</button>
+        <button>В</button>
+        <button>Г</button>
+        <button>Ґ</button>
+        <button>Д</button>
+        <button>Е</button>
+        <button>Є</button>
+        <button>Ж</button>
+        <button>З</button>
+        <button>И</button>
+        <button>І</button>
+        <button>Ї</button>
+        <button>Й</button>
+        <button>К</button>
+        <button>Л</button>
+
+      </div>
+
+      <div class="alphabet-row">
+
+        <button>М</button>
+        <button>Н</button>
+        <button>О</button>
+        <button>П</button>
+        <button>Р</button>
+        <button>С</button>
+        <button>Т</button>
+        <button>У</button>
+        <button>Ф</button>
+        <button>Х</button>
+        <button>Ц</button>
+        <button>Ч</button>
+        <button>Ш</button>
+        <button>Щ</button>
+        <button>Ь</button>
+        <button>Ю</button>
+        <button>Я</button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="dictionary-list">
+
+    <div class="letter-badge"># А</div>
+
+    <div class="words-grid">
+
+      <a href="#" class="word-link">авторизація</a>
+      <a href="#" class="word-link">апгрейд</a>
+      <a href="#" class="word-link">апгрейт</a>
+      <a href="#" class="word-link">апгрейдити</a>
+      <a href="#" class="word-link">апгрейднутий</a>
+      <a href="#" class="word-link">апдейтити</a>
+
+    </div>
+
+  </section>
+
+  <section class="suggest-banner">
+
+    <h2>
+      Знайшов англізм?<br>
+      Запропонуй відповідник
+    </h2>
+
+    <a href="{{ url_for('suggest') }}"
+       class="main-button">
+
+      Запропонувати англізм
+
+    </a>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+
+  <div class="footer-links">
+
+    <a href="{{ url_for('about') }}">
+      Про нас
+    </a>
+
+    <a href="{{ url_for('contacts') }}">
+      Контакти
+    </a>
+
+  </div>
+
+  <div class="footer-bottom">
+    Розробили Фещак Анастасія та Грищук Вікторія
+  </div>
+
+</footer>
+
+</body>
+</html>
