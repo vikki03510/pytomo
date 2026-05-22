@@ -990,11 +990,77 @@ def admin_database():
     if not session.get("admin_logged_in"):
         return redirect(url_for("admin_login"))
 
+    search_query = request.args.get("search", "").strip()
+
+    selected_letter = request.args.get("letter", "А")
+
+    page = request.args.get("page", 1, type=int)
+
+    per_page = 8
+
     anglicisms = get_all_anglicisms()
+
+    # =========================
+    # ФІЛЬТР ПО ЛІТЕРІ
+    # =========================
+
+    anglicisms = [
+
+        item for item in anglicisms
+
+        if item["anglicism"].upper().startswith(
+            selected_letter.upper()
+        )
+
+    ]
+
+    # =========================
+    # ПОШУК
+    # =========================
+
+    if search_query:
+
+        anglicisms = [
+
+            item for item in anglicisms
+
+            if search_query.lower()
+            in item["anglicism"].lower()
+
+        ]
+
+    # =========================
+    # ПАГІНАЦІЯ
+    # =========================
+
+    total_items = len(anglicisms)
+
+    total_pages = (
+        (total_items + per_page - 1) // per_page
+    )
+
+    if total_pages == 0:
+        total_pages = 1
+
+    if page > total_pages:
+        page = total_pages
+
+    if page < 1:
+        page = 1
+
+    start = (page - 1) * per_page
+
+    end = start + per_page
+
+    paginated_anglicisms = anglicisms[start:end]
 
     return render_template(
         "admin_database.html",
-        anglicisms=anglicisms
+        anglicisms=paginated_anglicisms,
+        page=page,
+        total_pages=total_pages,
+        selected_letter=selected_letter,
+        search_query=search_query
     )
 
 
@@ -1190,13 +1256,233 @@ def admin_add_anglicism():
     )
 
 
-@app.route("/admin_edit_anglicism.html")
-def admin_edit_anglicism():
-    
+@app.route(
+    "/admin_edit_anglicism/<int:anglicism_id>",
+    methods=["GET", "POST"]
+)
+def admin_edit_anglicism(anglicism_id):
+
     if not session.get("admin_logged_in"):
         return redirect(url_for("admin_login"))
-    
-    return render_template("admin_edit_anglicism.html")
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    # =========================
+    # ЗБЕРЕЖЕННЯ ЗМІН
+    # =========================
+
+    if request.method == "POST":
+
+        anglicism = capitalize_first(
+            request.form.get("word", "")
+        )
+
+        part_of_speech = capitalize_first(
+            request.form.get("part_of_speech", "")
+        )
+
+        original_spelling = format_original_spelling(
+            request.form.get("english_word", "")
+        )
+
+        variants = request.form.get("variants", "")
+
+        definition = format_definition(
+            request.form.get("definition", "")
+        )
+
+        notes = format_note(
+            request.form.get("notes", "")
+        )
+
+        # =========================
+        # UPDATE АНГЛІЗМА
+        # =========================
+
+        cursor.execute(
+            """
+            UPDATE Англізм
+            SET
+                Англізм = ?,
+                "Частина мови" = ?,
+                "Оригінальне написання англізма" = ?,
+                Тлумачення = ?,
+                Зауваження = ?
+            WHERE ID = ?
+            """,
+            (
+                anglicism,
+                part_of_speech,
+                original_spelling,
+                definition,
+                notes,
+                anglicism_id
+            )
+        )
+
+        # =========================
+        # ВИДАЛЕННЯ СТАРИХ ВАРІЯНТІВ
+        # =========================
+
+        cursor.execute(
+            """
+            DELETE FROM Варіянт_написання_англізма
+            WHERE "ID англізма" = ?
+            """,
+            (anglicism_id,)
+        )
+
+        variants_list = [
+            v.strip()
+            for v in variants.split(",")
+            if v.strip()
+        ]
+
+        for variant in variants_list:
+
+            variant = capitalize_first(variant)
+
+            cursor.execute(
+                "SELECT MAX(ID) FROM Варіянт_написання_англізма"
+            )
+
+            last_variant_id = cursor.fetchone()[0]
+
+            if last_variant_id is None:
+                new_variant_id = 1
+            else:
+                new_variant_id = last_variant_id + 1
+
+            cursor.execute(
+                """
+                INSERT INTO Варіянт_написання_англізма (
+                    ID,
+                    "ID англізма",
+                    "Варіянт написання"
+                )
+                VALUES (?, ?, ?)
+                """,
+                (
+                    new_variant_id,
+                    anglicism_id,
+                    variant
+                )
+            )
+
+        # =========================
+        # ВИДАЛЕННЯ СТАРИХ ВІДПОВІДНИКІВ
+        # =========================
+
+        cursor.execute(
+            """
+            DELETE FROM Відповідник
+            WHERE "ID англізма" = ?
+            """,
+            (anglicism_id,)
+        )
+
+        equivalent_words = request.form.getlist(
+            "equivalent_word[]"
+        )
+
+        equivalent_definitions = request.form.getlist(
+            "equivalent_definition[]"
+        )
+
+        example_equivalents = request.form.getlist(
+            "example_equivalent[]"
+        )
+
+        example_anglicisms = request.form.getlist(
+            "example_anglicism[]"
+        )
+
+        for i in range(len(equivalent_words)):
+
+            replacement = capitalize_first(
+                equivalent_words[i]
+            )
+
+            replacement_definition = format_definition(
+                equivalent_definitions[i]
+            )
+
+            replacement_example = format_example(
+                example_equivalents[i]
+            )
+
+            anglicism_example = format_example(
+                example_anglicisms[i]
+            )
+
+            cursor.execute(
+                "SELECT MAX(ID) FROM Відповідник"
+            )
+
+            last_replacement_id = cursor.fetchone()[0]
+
+            if last_replacement_id is None:
+                new_replacement_id = 1
+            else:
+                new_replacement_id = last_replacement_id + 1
+
+            cursor.execute(
+                """
+                INSERT INTO Відповідник (
+                    ID,
+                    "ID англізма",
+                    Відповідник,
+                    Тлумачення,
+                    "Приклад вживання відповідника",
+                    "Приклад вживання англізма"
+                )
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    new_replacement_id,
+                    anglicism_id,
+                    replacement,
+                    replacement_definition,
+                    replacement_example,
+                    anglicism_example
+                )
+            )
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("admin_database"))
+
+    # =========================
+    # GET
+    # =========================
+
+    anglicism_data = get_anglicism_by_id(
+        anglicism_id
+    )
+
+    if not anglicism_data:
+        conn.close()
+        return redirect(url_for("admin_database"))
+
+    equivalents = anglicism_data["replacements"]
+
+    conn.close()
+
+    return render_template(
+        "admin_edit_anglicism.html",
+        anglicism={
+            "id": anglicism_data["id"],
+            "word": anglicism_data["anglicism"],
+            "part_of_speech": anglicism_data["part_of_speech"],
+            "english_word": anglicism_data["original_spelling"],
+            "definition": anglicism_data["definition"],
+            "notes": "",
+            "variants": ", ".join(anglicism_data["variants"])
+        },
+        equivalents=equivalents
+    )
 
 
 @app.route("/admin_suggestions.html")

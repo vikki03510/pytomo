@@ -268,13 +268,14 @@
 
         </div>
 
-        <div class="info-card variant-card">
+		<div class="info-card variant-card"
+			 id="variants-card">
 
-          <h3>Варіянти написання</h3>
+		  <h3>Варіянти написання</h3>
 
-          <p id="popup-variants"></p>
+		  <p id="popup-variants"></p>
 
-        </div>
+		</div>
 
       </div>
 
@@ -314,6 +315,7 @@ const popupAnglicism = document.getElementById('popup-anglicism');
 const popupPartOfSpeech = document.getElementById('popup-part-of-speech');
 const popupOriginal = document.getElementById('popup-original');
 const popupVariants = document.getElementById('popup-variants');
+const variantsCard = document.getElementById('variants-card');
 const popupDefinition = document.getElementById('popup-definition');
 const popupReplacements = document.getElementById('popup-replacements');
 
@@ -467,7 +469,18 @@ wordLinks.forEach(link => {
         popupAnglicism.textContent = data.anglicism;
         popupPartOfSpeech.textContent = data.part_of_speech;
         popupOriginal.textContent = data.original_spelling;
-        popupVariants.textContent = data.variants.join(', ');
+		if (data.variants.length > 0) {
+
+			popupVariants.textContent = data.variants.join(', ');
+
+			variantsCard.style.display = 'block';
+
+		}
+		else {
+
+			variantsCard.style.display = 'none';
+
+		}
         popupDefinition.textContent = data.definition;
 
         popupReplacements.innerHTML = '';

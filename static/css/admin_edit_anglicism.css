@@ -270,6 +270,32 @@ body {
   outline: 2px solid var(--wine);
 }
 
+.save-button {
+  width: 260px;
+  height: 55px;
+  margin-top: 28px;
+  border: none;
+  border-radius: 30px;
+  background: var(--wine);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.save-button:hover {
+  background: #DBD189;
+  color: #540b14;
+  outline: 2px solid var(--wine);
+}
+
 .confirm-popup {
   position: fixed;
   inset: 0;
@@ -439,4 +465,16 @@ body {
 
 .user-site-button:hover {
   color: #DBD189;
+}
+
+.editable-text {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.editable-text:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
 }

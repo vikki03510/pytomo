@@ -22,7 +22,7 @@
 
   <nav class="admin-nav">
 
-    <a href="admin_database.html"
+    <a href="{{ url_for('admin_database') }}"
        class="admin-nav-item active">
 
       <img src="{{ url_for('static', filename='images/іконка_база_даних.svg') }}"
@@ -35,7 +35,7 @@
 
     </a>
 
-    <a href="admin_suggestions.html"
+    <a href="{{ url_for('admin_suggestions') }}"
        class="admin-nav-item">
 
       <img src="{{ url_for('static', filename='images/іконка_лампочка.svg') }}"
@@ -48,7 +48,7 @@
 
     </a>
 
-    <a href="admin_messages.html"
+    <a href="{{ url_for('admin_messages') }}"
        class="admin-nav-item">
 
       <img src="{{ url_for('static', filename='images/іконка_повідомлення.svg') }}"
@@ -69,10 +69,18 @@
 
   <section class="admin-search-section">
 
-    <form class="admin-search-form">
+    <form class="admin-search-form"
+          method="GET"
+          action="{{ url_for('admin_database') }}">
 
       <input type="text"
+             name="search"
+             value="{{ search_query }}"
              placeholder="Введіть англізм для пошуку" />
+
+      <input type="hidden"
+             name="letter"
+             value="{{ selected_letter }}" />
 
       <button type="submit"
               aria-label="Пошук">
@@ -96,59 +104,49 @@
 
       <div class="alphabet-row">
 
-        <button class="letter-button"
-                type="button"
-                data-letter="ALL">
+        {% for letter in [
+          'А','Б','В','Г','Ґ','Д','Е','Є',
+          'Ж','З','И','І','Ї','Й','К','Л','М'
+        ] %}
 
-          Все
+          <a href="{{ url_for(
+                        'admin_database',
+                        letter=letter
+                     ) }}"
+             class="letter-button
+             {% if selected_letter == letter %}
+             letter-active
+             {% endif %}">
 
-        </button>
+            {{ letter }}
 
-        <button class="letter-button letter-active"
-                type="button"
-                data-letter="А">
+          </a>
 
-          А
-
-        </button>
-
-        <button class="letter-button" type="button" data-letter="Б">Б</button>
-        <button class="letter-button" type="button" data-letter="В">В</button>
-        <button class="letter-button" type="button" data-letter="Г">Г</button>
-        <button class="letter-button" type="button" data-letter="Ґ">Ґ</button>
-        <button class="letter-button" type="button" data-letter="Д">Д</button>
-        <button class="letter-button" type="button" data-letter="Е">Е</button>
-        <button class="letter-button" type="button" data-letter="Є">Є</button>
-        <button class="letter-button" type="button" data-letter="Ж">Ж</button>
-        <button class="letter-button" type="button" data-letter="З">З</button>
-        <button class="letter-button" type="button" data-letter="И">И</button>
-        <button class="letter-button" type="button" data-letter="І">І</button>
-        <button class="letter-button" type="button" data-letter="Ї">Ї</button>
-        <button class="letter-button" type="button" data-letter="Й">Й</button>
-        <button class="letter-button" type="button" data-letter="К">К</button>
-        <button class="letter-button" type="button" data-letter="Л">Л</button>
-        <button class="letter-button" type="button" data-letter="М">М</button>
+        {% endfor %}
 
       </div>
 
       <div class="alphabet-row">
 
-        <button class="letter-button" type="button" data-letter="Н">Н</button>
-        <button class="letter-button" type="button" data-letter="О">О</button>
-        <button class="letter-button" type="button" data-letter="П">П</button>
-        <button class="letter-button" type="button" data-letter="Р">Р</button>
-        <button class="letter-button" type="button" data-letter="С">С</button>
-        <button class="letter-button" type="button" data-letter="Т">Т</button>
-        <button class="letter-button" type="button" data-letter="У">У</button>
-        <button class="letter-button" type="button" data-letter="Ф">Ф</button>
-        <button class="letter-button" type="button" data-letter="Х">Х</button>
-        <button class="letter-button" type="button" data-letter="Ц">Ц</button>
-        <button class="letter-button" type="button" data-letter="Ч">Ч</button>
-        <button class="letter-button" type="button" data-letter="Ш">Ш</button>
-        <button class="letter-button" type="button" data-letter="Щ">Щ</button>
-        <button class="letter-button" type="button" data-letter="Ь">Ь</button>
-        <button class="letter-button" type="button" data-letter="Ю">Ю</button>
-        <button class="letter-button" type="button" data-letter="Я">Я</button>
+        {% for letter in [
+          'Н','О','П','Р','С','Т','У','Ф',
+          'Х','Ц','Ч','Ш','Щ','Ь','Ю','Я'
+        ] %}
+
+          <a href="{{ url_for(
+                        'admin_database',
+                        letter=letter
+                     ) }}"
+             class="letter-button
+             {% if selected_letter == letter %}
+             letter-active
+             {% endif %}">
+
+            {{ letter }}
+
+          </a>
+
+        {% endfor %}
 
       </div>
 
@@ -162,10 +160,11 @@
 
       <h1>База даних англізмів та відповідників</h1>
 
-      <a href="admin_add_anglicism.html"
+      <a href="{{ url_for('admin_add_anglicism') }}"
          class="add-button">
 
-        <img src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
+        <img src="{{ url_for('static',
+                             filename='images/іконка_плюсик.svg') }}"
              alt="" />
 
         Додати англізм
@@ -176,47 +175,194 @@
 
     <div class="database-grid">
 
-  {% for item in anglicisms %}
+      {% for item in anglicisms %}
 
-  <div class="word-row"
-       data-letter="{{ item.anglicism[0]|upper }}">
+      <div class="word-row">
 
-    <span>{{ item.anglicism }}</span>
+        <span class="word-name">
+          {{ item.anglicism }}
+        </span>
 
-    <div class="actions">
+        <div class="actions">
 
-      <a href="admin_edit_anglicism.html"
-         class="icon-button">
+          <a href="{{ url_for(
+                        'admin_edit_anglicism',
+                        anglicism_id=item.id
+                     ) }}"
+             class="icon-button">
 
-        <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-             alt="Редагувати" />
+            <img src="{{ url_for(
+                           'static',
+                           filename='images/іконка_редагувати.svg'
+                         ) }}"
+                 alt="Редагувати" />
 
-      </a>
+          </a>
 
-      <button class="icon-button delete-item-button"
-              type="button"
-              data-id="{{ item.id }}"
-              data-confirm="Ви впевнені, що хочете видалити англізм з бази даних?">
+          <button class="icon-button delete-item-button"
+                  type="button"
+                  data-id="{{ item.id }}"
+                  data-confirm="Ви впевнені, що хочете видалити англізм з бази даних?">
 
-        <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-             alt="Видалити" />
+            <img src="{{ url_for(
+                           'static',
+                           filename='images/іконка_смітник.svg'
+                         ) }}"
+                 alt="Видалити" />
 
-      </button>
+          </button>
+
+        </div>
+
+      </div>
+
+      {% endfor %}
 
     </div>
 
-  </div>
+    <div class="pagination">
 
-  {% endfor %}
+      {% set pages_per_group = 4 %}
 
-  <p class="empty-message"
-     style="display: none;">
+      {% set current_group =
+          ((page - 1) // pages_per_group)
+      %}
 
-    Список порожній
+      {% set start_page =
+          current_group * pages_per_group + 1
+      %}
 
-  </p>
+      {% set end_page =
+          start_page + pages_per_group - 1
+      %}
 
-</div>
+      {% if end_page > total_pages %}
+        {% set end_page = total_pages %}
+      {% endif %}
+
+      {% if total_pages == 0 %}
+
+        <button class="page-button page-arrow disabled"
+                type="button">«</button>
+
+        <button class="page-button page-arrow disabled"
+                type="button">‹</button>
+
+        <button class="page-button current-page disabled"
+                type="button">1</button>
+
+        <button class="page-button page-arrow disabled"
+                type="button">›</button>
+
+        <button class="page-button page-arrow disabled"
+                type="button">»</button>
+
+      {% else %}
+
+        {% if page > 1 %}
+
+          <a class="page-button page-arrow active-page"
+             href="{{ url_for(
+                        'admin_database',
+                        page=1,
+                        letter=selected_letter,
+                        search=search_query
+                     ) }}">
+
+            «
+
+          </a>
+
+          <a class="page-button page-arrow active-page"
+             href="{{ url_for(
+                        'admin_database',
+                        page=page-1,
+                        letter=selected_letter,
+                        search=search_query
+                     ) }}">
+
+            ‹
+
+          </a>
+
+        {% else %}
+
+          <button class="page-button page-arrow disabled"
+                  type="button">«</button>
+
+          <button class="page-button page-arrow disabled"
+                  type="button">‹</button>
+
+        {% endif %}
+
+        {% for p in range(start_page, end_page + 1) %}
+
+          {% if p == page %}
+
+            <button class="page-button page-number current-page"
+                    type="button">
+
+              {{ p }}
+
+            </button>
+
+          {% else %}
+
+            <a class="page-button page-number active-page"
+               href="{{ url_for(
+                          'admin_database',
+                          page=p,
+                          letter=selected_letter,
+                          search=search_query
+                       ) }}">
+
+              {{ p }}
+
+            </a>
+
+          {% endif %}
+
+        {% endfor %}
+
+        {% if page < total_pages %}
+
+          <a class="page-button page-arrow active-page"
+             href="{{ url_for(
+                        'admin_database',
+                        page=page+1,
+                        letter=selected_letter,
+                        search=search_query
+                     ) }}">
+
+            ›
+
+          </a>
+
+          <a class="page-button page-arrow active-page"
+             href="{{ url_for(
+                        'admin_database',
+                        page=total_pages,
+                        letter=selected_letter,
+                        search=search_query
+                     ) }}">
+
+            »
+
+          </a>
+
+        {% else %}
+
+          <button class="page-button page-arrow disabled"
+                  type="button">›</button>
+
+          <button class="page-button page-arrow disabled"
+                  type="button">»</button>
+
+        {% endif %}
+
+      {% endif %}
+
+    </div>
 
   </section>
 
@@ -224,7 +370,7 @@
 
 <footer class="admin-footer">
 
-  <a href="improve.html"
+  <a href="{{ url_for('improve') }}"
      class="user-site-button">
 
     Користувацький сайт
@@ -250,16 +396,12 @@
 
       <button class="confirm-no"
               type="button">
-
         Ні
-
       </button>
 
       <button class="confirm-yes"
               type="button">
-
         Так
-
       </button>
 
     </div>
@@ -375,13 +517,9 @@ letterButtons.forEach(button => {
 
     wordRows.forEach(row => {
 
-      if (
-        selectedLetter === "ALL"
-        ||
-        row.dataset.letter === selectedLetter
-      ) {
+      if (row.dataset.letter === selectedLetter) {
 
-        row.style.display = "flex";
+        row.style.display = "grid";
 
         visibleCount++;
 

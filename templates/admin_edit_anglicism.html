@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html lang="uk">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Адмін | Редагування англізма</title>
 
-  <link rel="stylesheet"
-        href="{{ url_for('static', filename='css/admin_edit_anglicism.css') }}">
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/admin_edit_anglicism.css') }}"
+  />
 </head>
 
 <body>
 
 <header class="admin-header">
 
-  <img class="logo"
-       src="{{ url_for('static', filename='images/Лого.svg') }}"
-       alt="Платформа Питомо" />
+  <img
+    class="logo"
+    src="{{ url_for('static', filename='images/Лого.svg') }}"
+    alt="Платформа Питомо"
+  />
 
   <nav class="admin-nav">
 
-    <a href="admin_database.html"
-       class="admin-nav-item active">
+    <a
+      href="{{ url_for('admin_database') }}"
+      class="admin-nav-item active"
+    >
 
-      <img src="{{ url_for('static', filename='images/іконка_база_даних.svg') }}"
-           alt="" />
+      <img
+        src="{{ url_for('static', filename='images/іконка_база_даних.svg') }}"
+        alt=""
+      />
 
       <div>
         <span>База даних</span>
@@ -35,11 +41,15 @@
 
     </a>
 
-    <a href="admin_suggestions.html"
-       class="admin-nav-item">
+    <a
+      href="{{ url_for('admin_suggestions') }}"
+      class="admin-nav-item"
+    >
 
-      <img src="{{ url_for('static', filename='images/іконка_лампочка.svg') }}"
-           alt="" />
+      <img
+        src="{{ url_for('static', filename='images/іконка_лампочка.svg') }}"
+        alt=""
+      />
 
       <div>
         <span>Пропозиції</span>
@@ -48,11 +58,15 @@
 
     </a>
 
-    <a href="admin_messages.html"
-       class="admin-nav-item">
+    <a
+      href="{{ url_for('admin_messages') }}"
+      class="admin-nav-item"
+    >
 
-      <img src="{{ url_for('static', filename='images/іконка_повідомлення.svg') }}"
-           alt="" />
+      <img
+        src="{{ url_for('static', filename='images/іконка_повідомлення.svg') }}"
+        alt=""
+      />
 
       <div>
         <span>Повідомлення</span>
@@ -73,7 +87,17 @@
       <h1>Редагування англізма</h1>
     </div>
 
-    <form class="edit-form">
+    <form
+      class="edit-form"
+      method="POST"
+      action="{{ url_for('admin_edit_anglicism', anglicism_id=anglicism.id) }}"
+    >
+
+      <input
+        type="hidden"
+        name="anglicism_id"
+        value="{{ anglicism.id }}"
+      >
 
       <div class="form-row">
 
@@ -83,12 +107,27 @@
 
           <div class="editable-field short">
 
-            <span>Апгрейд</span>
+            <span
+              class="editable-text"
+              contenteditable="true"
+              data-input-id="anglicism-word-input"
+            >
+              {{ anglicism.word }}
+            </span>
+
+            <input
+              type="hidden"
+              id="anglicism-word-input"
+              name="word"
+              value="{{ anglicism.word }}"
+            >
 
             <button type="button">
 
-              <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                   alt="Редагувати" />
+              <img
+                src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                alt="Редагувати"
+              />
 
             </button>
 
@@ -102,12 +141,27 @@
 
           <div class="editable-field short">
 
-            <span>Іменник</span>
+            <span
+              class="editable-text"
+              contenteditable="true"
+              data-input-id="part-of-speech-input"
+            >
+              {{ anglicism.part_of_speech }}
+            </span>
+
+            <input
+              type="hidden"
+              id="part-of-speech-input"
+              name="part_of_speech"
+              value="{{ anglicism.part_of_speech }}"
+            >
 
             <button type="button">
 
-              <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                   alt="Редагувати" />
+              <img
+                src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                alt="Редагувати"
+              />
 
             </button>
 
@@ -125,12 +179,27 @@
 
           <div class="editable-field short">
 
-            <span>upgrade</span>
+            <span
+              class="editable-text"
+              contenteditable="true"
+              data-input-id="english-input"
+            >
+              {{ anglicism.english_word }}
+            </span>
+
+            <input
+              type="hidden"
+              id="english-input"
+              name="english_word"
+              value="{{ anglicism.english_word }}"
+            >
 
             <button type="button">
 
-              <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                   alt="Редагувати" />
+              <img
+                src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                alt="Редагувати"
+              />
 
             </button>
 
@@ -142,7 +211,33 @@
 
           Варіянти написання англізма через кому
 
-          <input type="text" />
+          <div class="editable-field short">
+
+            <span
+              class="editable-text"
+              contenteditable="true"
+              data-input-id="variants-input"
+            >
+              {{ anglicism.variants }}
+            </span>
+
+            <input
+              type="hidden"
+              id="variants-input"
+              name="variants"
+              value="{{ anglicism.variants }}"
+            >
+
+            <button type="button">
+
+              <img
+                src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                alt="Редагувати"
+              />
+
+            </button>
+
+          </div>
 
         </label>
 
@@ -154,14 +249,27 @@
 
         <div class="editable-field large">
 
-          <span>
-            Покращення, удосконалення
+          <span
+            class="editable-text"
+            contenteditable="true"
+            data-input-id="definition-input"
+          >
+            {{ anglicism.definition }}
           </span>
+
+          <input
+            type="hidden"
+            id="definition-input"
+            name="definition"
+            value="{{ anglicism.definition }}"
+          >
 
           <button type="button">
 
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
+            <img
+              src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+              alt="Редагувати"
+            />
 
           </button>
 
@@ -175,14 +283,27 @@
 
         <div class="editable-field large">
 
-          <span>
-            Слово активне у сфері ІТ та електроніки
+          <span
+            class="editable-text"
+            contenteditable="true"
+            data-input-id="notes-input"
+          >
+            {{ anglicism.notes }}
           </span>
+
+          <input
+            type="hidden"
+            id="notes-input"
+            name="notes"
+            value="{{ anglicism.notes }}"
+          >
 
           <button type="button">
 
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
+            <img
+              src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+              alt="Редагувати"
+            />
 
           </button>
 
@@ -192,22 +313,43 @@
 
       <div id="equivalents-container">
 
+        {% for equivalent in equivalents %}
+
         <div class="equivalent-block">
+
+          <input
+            type="hidden"
+            name="equivalent_id[]"
+            value="{{ equivalent.id }}"
+          >
 
           <label class="short-field">
 
             <span class="equivalent-title">
-              Відповідник 1
+              Відповідник {{ loop.index }}
             </span>
 
             <div class="editable-field short">
 
-              <span>Покращення</span>
+              <span
+                class="editable-text equivalent-word"
+                contenteditable="true"
+              >
+                {{ equivalent.word }}
+              </span>
+
+              <input
+                type="hidden"
+                name="equivalent_word[]"
+                value="{{ equivalent.word }}"
+              >
 
               <button type="button">
 
-                <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                     alt="Редагувати" />
+                <img
+                  src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                  alt="Редагувати"
+                />
 
               </button>
 
@@ -218,20 +360,30 @@
           <label>
 
             <span class="meaning-title">
-              Тлумачення 1
+              Тлумачення {{ loop.index }}
             </span>
 
             <div class="editable-field large">
 
-              <span>
-                Дія за значенням покращити. Покращити - робити кращим,
-                досконалішим якістю, властивістю і т. ін (СУМ-11)
+              <span
+                class="editable-text equivalent-definition"
+                contenteditable="true"
+              >
+                {{ equivalent.definition }}
               </span>
+
+              <input
+                type="hidden"
+                name="equivalent_definition[]"
+                value="{{ equivalent.definition }}"
+              >
 
               <button type="button">
 
-                <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                     alt="Редагувати" />
+                <img
+                  src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                  alt="Редагувати"
+                />
 
               </button>
 
@@ -242,20 +394,30 @@
           <label>
 
             <span class="example-equivalent-title">
-              Приклад вживання відповідника 1
+              Приклад вживання відповідника {{ loop.index }}
             </span>
 
             <div class="editable-field large">
 
-              <span>
-                Законопроєкт спрямований на покращення інвестиційного клімату,
-                і це цілком зрозуміло (ГРАК)
+              <span
+                class="editable-text equivalent-example"
+                contenteditable="true"
+              >
+                {{ equivalent.example_equivalent }}
               </span>
+
+              <input
+                type="hidden"
+                name="example_equivalent[]"
+                value="{{ equivalent.example_equivalent }}"
+              >
 
               <button type="button">
 
-                <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                     alt="Редагувати" />
+                <img
+                  src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                  alt="Редагувати"
+                />
 
               </button>
 
@@ -266,20 +428,30 @@
           <label>
 
             <span class="example-anglicism-title">
-              Приклад вживання англізма 1
+              Приклад вживання англізма {{ loop.index }}
             </span>
 
             <div class="editable-field large">
 
-              <span>
-                До свого дня народження «Репортер» готує новий образ —
-                повноцінний, потужний і стильний апгрейд (СНА)
+              <span
+                class="editable-text anglicism-example"
+                contenteditable="true"
+              >
+                {{ equivalent.example_anglicism }}
               </span>
+
+              <input
+                type="hidden"
+                name="example_anglicism[]"
+                value="{{ equivalent.example_anglicism }}"
+              >
 
               <button type="button">
 
-                <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                     alt="Редагувати" />
+                <img
+                  src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                  alt="Редагувати"
+                />
 
               </button>
 
@@ -287,25 +459,38 @@
 
           </label>
 
-          <button class="delete-equivalent-button"
-                  type="button">
-
+          <button
+            class="delete-equivalent-button"
+            type="button"
+          >
             Видалити відповідник
-
           </button>
 
         </div>
 
+        {% endfor %}
+
       </div>
 
-      <button class="add-equivalent-button"
-              type="button">
+      <button
+        class="add-equivalent-button"
+        type="button"
+      >
 
-        <img src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
-             alt="" />
+        <img
+          src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
+          alt=""
+        />
 
         Додати ще один відповідник
 
+      </button>
+
+      <button
+        class="save-button"
+        type="submit"
+      >
+        Зберегти зміни
       </button>
 
     </form>
@@ -316,17 +501,16 @@
 
 <footer class="admin-footer">
 
-  <a href="improve.html"
-     class="user-site-button">
-
+  <a
+    href="{{ url_for('improve') }}"
+    class="user-site-button"
+  >
     Користувацький сайт
-
   </a>
 
 </footer>
 
-<div id="confirm-popup"
-     class="confirm-popup">
+<div id="confirm-popup" class="confirm-popup">
 
   <div class="confirm-window">
 
@@ -340,18 +524,18 @@
 
     <div class="confirm-actions">
 
-      <button class="confirm-yes"
-              type="button">
-
+      <button
+        class="confirm-yes"
+        type="button"
+      >
         Так
-
       </button>
 
-      <button class="confirm-no"
-              type="button">
-
+      <button
+        class="confirm-no"
+        type="button"
+      >
         Ні
-
       </button>
 
     </div>
@@ -372,34 +556,142 @@
 
   let blockToDelete = null;
 
+  function syncEditableFields() {
+
+    document
+      .querySelectorAll(".editable-text[data-input-id]")
+
+      .forEach(element => {
+
+        const inputId = element.dataset.inputId;
+
+        const hiddenInput = document.getElementById(inputId);
+
+        if (!hiddenInput) return;
+
+        element.addEventListener("input", () => {
+
+          hiddenInput.value = element.textContent.trim();
+
+        });
+
+      });
+
+    document
+      .querySelectorAll(".equivalent-block")
+
+      .forEach(block => {
+
+        const wordSpan = block.querySelector(".equivalent-word");
+
+        const wordInput = block.querySelector(
+          'input[name="equivalent_word[]"]'
+        );
+
+        const definitionSpan = block.querySelector(
+          ".equivalent-definition"
+        );
+
+        const definitionInput = block.querySelector(
+          'input[name="equivalent_definition[]"]'
+        );
+
+        const exampleEquivalentSpan = block.querySelector(
+          ".equivalent-example"
+        );
+
+        const exampleEquivalentInput = block.querySelector(
+          'input[name="example_equivalent[]"]'
+        );
+
+        const anglicismExampleSpan = block.querySelector(
+          ".anglicism-example"
+        );
+
+        const anglicismExampleInput = block.querySelector(
+          'input[name="example_anglicism[]"]'
+        );
+
+        if (wordSpan && wordInput) {
+
+          wordSpan.addEventListener("input", () => {
+
+            wordInput.value = wordSpan.textContent.trim();
+
+          });
+
+        }
+
+        if (definitionSpan && definitionInput) {
+
+          definitionSpan.addEventListener("input", () => {
+
+            definitionInput.value = definitionSpan.textContent.trim();
+
+          });
+
+        }
+
+        if (exampleEquivalentSpan && exampleEquivalentInput) {
+
+          exampleEquivalentSpan.addEventListener("input", () => {
+
+            exampleEquivalentInput.value = exampleEquivalentSpan
+              .textContent
+              .trim();
+
+          });
+
+        }
+
+        if (anglicismExampleSpan && anglicismExampleInput) {
+
+          anglicismExampleSpan.addEventListener("input", () => {
+
+            anglicismExampleInput.value = anglicismExampleSpan
+              .textContent
+              .trim();
+
+          });
+
+        }
+
+      });
+
+  }
+
   function openConfirm(text) {
+
     confirmText.textContent = text;
+
     confirmPopup.classList.add("show");
+
   }
 
   function closeConfirm() {
+
     confirmPopup.classList.remove("show");
+
     blockToDelete = null;
+
   }
 
   function isBlockFilled(block) {
 
-    const fieldsFilled = Array
-      .from(block.querySelectorAll("input, textarea"))
-      .some(field => field.value.trim() !== "");
-
     const editableFilled = Array
-      .from(block.querySelectorAll(".editable-field span"))
+      .from(block.querySelectorAll(".editable-text"))
+
       .some(field => field.textContent.trim() !== "");
 
-    return fieldsFilled || editableFilled;
+    return editableFilled;
 
   }
 
   function updateEquivalentNumbers() {
 
-    const blocks =
-      equivalentsContainer.querySelectorAll(".equivalent-block");
+    const blocks = equivalentsContainer.querySelectorAll(
+      ".equivalent-block"
+    );
 
     blocks.forEach((block, index) => {
 
@@ -421,11 +713,14 @@
 
     blocks.forEach(block => {
 
-      const deleteButton =
-        block.querySelector(".delete-equivalent-button");
+      const deleteButton = block.querySelector(
+        ".delete-equivalent-button"
+      );
 
       deleteButton.style.display =
-        blocks.length > 1 ? "flex" : "none";
+        blocks.length > 1
+          ? "flex"
+          : "none";
 
     });
 
@@ -434,20 +729,47 @@
   function createEquivalentBlock() {
 
     const number =
-      equivalentsContainer.querySelectorAll(".equivalent-block").length + 1;
+      equivalentsContainer
+        .querySelectorAll(".equivalent-block")
+        .length + 1;
 
     const block = document.createElement("div");
 
     block.className = "equivalent-block";
 
     block.innerHTML = `
+
+      <input type="hidden" name="equivalent_id[]" value="new">
+
       <label class="short-field">
 
         <span class="equivalent-title">
           Відповідник ${number}
         </span>
 
-        <input type="text" />
+        <div class="editable-field short">
+
+          <span
+            class="editable-text equivalent-word"
+            contenteditable="true"
+          ></span>
+
+          <input
+            type="hidden"
+            name="equivalent_word[]"
+            value=""
+          >
+
+          <button type="button">
+
+            <img
+              src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+              alt="Редагувати"
+            />
+
+          </button>
+
+        </div>
 
       </label>
 
@@ -457,7 +779,29 @@
           Тлумачення ${number}
         </span>
 
-        <textarea></textarea>
+        <div class="editable-field large">
+
+          <span
+            class="editable-text equivalent-definition"
+            contenteditable="true"
+          ></span>
+
+          <input
+            type="hidden"
+            name="equivalent_definition[]"
+            value=""
+          >
+
+          <button type="button">
+
+            <img
+              src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+              alt="Редагувати"
+            />
+
+          </button>
+
+        </div>
 
       </label>
 
@@ -467,7 +811,29 @@
           Приклад вживання відповідника ${number}
         </span>
 
-        <textarea></textarea>
+        <div class="editable-field large">
+
+          <span
+            class="editable-text equivalent-example"
+            contenteditable="true"
+          ></span>
+
+          <input
+            type="hidden"
+            name="example_equivalent[]"
+            value=""
+          >
+
+          <button type="button">
+
+            <img
+              src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+              alt="Редагувати"
+            />
+
+          </button>
+
+        </div>
 
       </label>
 
@@ -477,15 +843,37 @@
           Приклад вживання англізма ${number}
         </span>
 
-        <textarea></textarea>
+        <div class="editable-field large">
+
+          <span
+            class="editable-text anglicism-example"
+            contenteditable="true"
+          ></span>
+
+          <input
+            type="hidden"
+            name="example_anglicism[]"
+            value=""
+          >
+
+          <button type="button">
+
+            <img
+              src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+              alt="Редагувати"
+            />
+
+          </button>
+
+        </div>
 
       </label>
 
-      <button class="delete-equivalent-button"
-              type="button">
-
+      <button
+        class="delete-equivalent-button"
+        type="button"
+      >
         Видалити відповідник
-
       </button>
     `;
 
@@ -495,28 +883,31 @@
 
   addEquivalentButton.addEventListener("click", () => {
 
-    equivalentsContainer.appendChild(
-      createEquivalentBlock()
-    );
+    const newBlock = createEquivalentBlock();
+
+    equivalentsContainer.appendChild(newBlock);
 
     updateEquivalentNumbers();
+
+    syncEditableFields();
 
   });
 
   equivalentsContainer.addEventListener("click", event => {
 
-    const deleteButton =
-      event.target.closest(".delete-equivalent-button");
+    const deleteButton = event.target.closest(
+      ".delete-equivalent-button"
+    );
 
     if (!deleteButton) return;
 
-    const blocks =
-      equivalentsContainer.querySelectorAll(".equivalent-block");
+    const blocks = equivalentsContainer.querySelectorAll(
+      ".equivalent-block"
+    );
 
     if (blocks.length <= 1) return;
 
-    const block =
-      deleteButton.closest(".equivalent-block");
+    const block = deleteButton.closest(".equivalent-block");
 
     if (isBlockFilled(block)) {
 
@@ -526,7 +917,9 @@
         "Ви впевнені, що хочете видалити відповідник?"
       );
 
-    } else {
+    }
+
+    else {
 
       block.remove();
 
@@ -554,63 +947,57 @@
 
   });
 
-  updateEquivalentNumbers();
+document
+  .querySelectorAll(".editable-field button")
 
-
-
-
-  // =========================
-  // РЕДАГУВАННЯ ПОЛІВ
-  // =========================
-
-  const editButtons =
-    document.querySelectorAll(".editable-field button");
-
-  editButtons.forEach(button => {
+  .forEach(button => {
 
     button.addEventListener("click", () => {
 
-      const editableField =
-        button.closest(".editable-field");
+      const field = button.closest(".editable-field");
 
-      const span =
-        editableField.querySelector("span");
+      const editableText = field.querySelector(".editable-text");
 
-      if (!span) return;
+      if (!editableText) return;
 
-      const currentText =
-        span.textContent.trim();
+      field.style.background = "#ffffff";
 
-      const isLarge =
-        editableField.classList.contains("large");
+      editableText.focus();
 
-      let newField;
+      const range = document.createRange();
 
-      if (isLarge) {
+      range.selectNodeContents(editableText);
 
-        newField = document.createElement("textarea");
+      range.collapse(false);
 
-        newField.value = currentText;
+      const selection = window.getSelection();
 
-      } else {
+      selection.removeAllRanges();
 
-        newField = document.createElement("input");
-
-        newField.type = "text";
-
-        newField.value = currentText;
-
-      }
-
-      newField.className = "editing-input";
-
-      span.replaceWith(newField);
-
-      newField.focus();
+      selection.addRange(range);
 
     });
 
   });
+
+document
+  .querySelectorAll(".editable-text")
+
+  .forEach(text => {
+
+    text.addEventListener("blur", () => {
+
+      const field = text.closest(".editable-field");
+
+      field.style.background = "";
+
+    });
+
+  });
+
+  syncEditableFields();
+
+  updateEquivalentNumbers();
 
 </script>
 
