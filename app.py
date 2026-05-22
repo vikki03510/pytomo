@@ -683,7 +683,20 @@ def polish_with_ai(text_with_markers: str):
     prompt = f"""
 Виправ граматику в українському реченні.
 Не пояснюй нічого.
-Поверни тільки виправлене речення.
+Поверни тільки виправлене речення, яке звучить природно українською. Наприклад замість "Ні вікового утиску" треба написати "Ні віковому утиску"
+Виправ усі помилки, перепиши речення без помилок.
+
+Додатково:
+Перевір граматику і природність усього тексту, а не тільки окремі замінені слова.
+Узгоджуй слова навколо замінених англізмів за відмінком, числом, родом і контекстом.
+Наприклад, якщо після заміни виходить "робив знятку помилку", виправ на природне "робив знятку помилки".
+
+У тексті є службові мітки виду [[PYTOMO_0]]слово або словосполучення[[/PYTOMO_0]].
+Ці мітки потрібні для підсвічування замінених англізмів.
+Не видаляй самі мітки і не змінюй їхні номери.
+Але текст усередині міток можна граматично змінювати, якщо цього потребує речення.
+
+Також якщо виходять тавтології, наприклад "робити знімок екрана помилки на екрані" - цього також уникай і прибирай тавтологію
 
 Речення:
 {text_with_markers}
@@ -749,6 +762,58 @@ def improve_full_text(text: str):
     output_html = build_output_html_from_markers(polished_text, changes)
 
     return input_html, output_html, changes
+
+
+def improve_selected_replacement(
+    original_text: str,
+    original_word: str,
+    new_replacement: str
+):
+
+    dictionary = load_anglicisms_from_db(DB_PATH)
+
+    input_html, replaced_text_with_markers, changes = (
+        replace_anglicisms_with_markers(
+            original_text,
+            dictionary
+        )
+    )
+
+    for change in changes:
+
+        if change["original"].lower() == original_word.lower():
+
+            inflected = inflect_replacement(
+                new_replacement,
+                original_word
+            )
+
+            marker_start = f"[[PYTOMO_{change['index']}]]"
+            marker_end = f"[[/PYTOMO_{change['index']}]]"
+
+            pattern = re.escape(marker_start) + r".*?" + re.escape(marker_end)
+
+            replaced_text_with_markers = re.sub(
+                pattern,
+                f"{marker_start}{inflected}{marker_end}",
+                replaced_text_with_markers,
+                count=1
+            )
+
+            change["replacement"] = inflected
+
+            break
+
+    polished_text = polish_with_ai(
+        replaced_text_with_markers
+    )
+
+    output_html = build_output_html_from_markers(
+        polished_text,
+        changes
+    )
+
+    return output_html
     
     
 # =========================
@@ -1196,6 +1261,33 @@ def api_improve():
         "output_html": output_html,
         "changes": changes,
         "remaining": 10
+    })
+
+
+@app.route("/api/replace-option", methods=["POST"])
+def api_replace_option():
+
+    data = request.get_json(force=True)
+
+    original_text = data.get("text", "")
+    original_word = data.get("original_word", "")
+    new_replacement = data.get("replacement", "")
+
+    if not original_text or not original_word or not new_replacement:
+
+        return jsonify({
+            "ok": False
+        }), 400
+
+    output_html = improve_selected_replacement(
+        original_text,
+        original_word,
+        new_replacement
+    )
+
+    return jsonify({
+        "ok": True,
+        "output_html": output_html
     })
 
 
