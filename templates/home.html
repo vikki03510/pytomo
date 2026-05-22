@@ -112,8 +112,12 @@
 
         </p>
 
-        <button class="small-button">
+        <button
+          class="small-button"
+          onclick="shareWordOfDay({{ word_of_the_day.id }})">
+
           Поділитись
+
         </button>
 
       </div>
@@ -253,6 +257,33 @@
   </div>
 
 </footer>
+
+<script>
+
+async function shareWordOfDay(wordId) {
+
+    const link =
+        window.location.origin +
+        "/dictionary.html?word=" +
+        wordId;
+
+    try {
+
+        await navigator.clipboard.writeText(link);
+
+        alert("Посилання на словникову статтю скопійовано!");
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Не вдалося скопіювати посилання.");
+
+    }
+
+}
+
+</script>
 
 </body>
 </html>
