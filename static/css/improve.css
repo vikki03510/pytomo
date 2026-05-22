@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "Nastup Soft";
+    src: url("/static/fonts/Nastup-Soft.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
   --bg: #f8f8f7;
   --beige: #ccc0b2;
@@ -244,4 +251,107 @@ body {
   color: var(--dark);
   padding: 18px;
   font-size: 18px;
+}
+
+.status-panel {
+  width: 1100px;
+  margin: 28px auto 0;
+}
+
+.status-text {
+  min-height: 44px;
+  border-radius: 24px;
+  background: #DBD189;
+  color: #540B14;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 24px;
+}
+
+.editable-text,
+.output-result {
+  width: 100%;
+  height: 100%;
+  padding: 28px 30px;
+  font-family: "Noto Sans Hebrew New", Arial, sans-serif;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--dark);
+  outline: none;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+.editable-text:empty::before {
+  content: attr(data-placeholder);
+  color: var(--beige);
+}
+
+.input-anglicism {
+  color: #540B14;
+}
+
+.replaced-word {
+  color: #540B14;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.replaced-word:hover {
+  color: #DBD189;
+}
+
+.replacement-popup {
+  position: absolute;
+  z-index: 99999;
+  width: 250px;
+  display: none;
+}
+
+.replace-title {
+  width: 100%;
+  height: 38px;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  background: #540B14;
+  color: white;
+  font-size: 15px;
+  cursor: default;
+}
+
+.replacement-list {
+  max-height: 160px;
+  overflow-y: auto;
+  border: 2px solid #540B14;
+  border-top: none;
+  background: #f8f8f7;
+  border-radius: 0 0 8px 8px;
+}
+
+.replacement-list button {
+  width: 100%;
+  min-height: 38px;
+  border: none;
+  border-bottom: 1px solid #CCC0B2;
+  background: #f8f8f7;
+  color: #22080b;
+  font-size: 15px;
+  text-align: left;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.replacement-list button:last-child {
+  border-bottom: none;
+}
+
+.replacement-list button:hover {
+  background: #DBD189;
+  color: #540B14;
 }

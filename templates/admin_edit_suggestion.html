@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+
+  <title>Адмін | Редагування пропозиції</title>
+
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/admin_edit_suggestion.css') }}">
+</head>
+
+<body>
+
+<header class="admin-header">
+
+  <img class="logo"
+       src="{{ url_for('static', filename='images/Лого.svg') }}"
+       alt="Платформа Питомо" />
+
+  <nav class="admin-nav">
+
+    <a href="admin_database.html"
+       class="admin-nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_база_даних.svg') }}"
+           alt="" />
+
+      <div>
+        <span>База даних</span>
+        <small>Редагувати базу</small>
+      </div>
+
+    </a>
+
+    <a href="admin_suggestions.html"
+       class="admin-nav-item active">
+
+      <img src="{{ url_for('static', filename='images/іконка_лампочка.svg') }}"
+           alt="" />
+
+      <div>
+        <span>Пропозиції</span>
+        <small>Ідеї відповідників</small>
+      </div>
+
+    </a>
+
+    <a href="admin_messages.html"
+       class="admin-nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_повідомлення.svg') }}"
+           alt="" />
+
+      <div>
+        <span>Повідомлення</span>
+        <small>Зв’язок із користувачами</small>
+      </div>
+
+    </a>
+
+  </nav>
+
+</header>
+
+<main>
+
+  <section class="add-card">
+
+    <div class="add-card-header">
+
+      <h1>Редагування пропозиції англізма</h1>
+
+      <a
+        href="admin_database.html"
+        class="save-button"
+        data-confirm="Ви впевнені, що хочете додати англізм до бази даних?"
+      >
+
+        <img src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
+             alt="" />
+
+        Додати до бази
+
+      </a>
+
+    </div>
+
+    <form class="add-form">
+
+      <div class="form-row">
+
+        <label>
+
+          Англізм
+
+          <div class="editable-input">
+
+            <span>Айдентика</span>
+
+            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                 alt="" />
+
+          </div>
+
+        </label>
+
+        <label>
+
+          Частина мови
+
+          <input type="text" />
+
+        </label>
+
+      </div>
+
+      <div class="form-row">
+
+        <label>
+
+          Написання англійською
+
+          <input type="text" />
+
+        </label>
+
+        <label>
+
+          Варіянти написання англізма через кому
+
+          <input type="text" />
+
+        </label>
+
+      </div>
+
+      <label>
+
+        Тлумачення
+
+        <textarea></textarea>
+
+      </label>
+
+      <label>
+
+        Зауваження
+
+        <textarea></textarea>
+
+      </label>
+
+      <div id="equivalents-container">
+
+        <div class="equivalent-block">
+
+          <label class="short-field">
+
+            <span class="equivalent-title">
+              Відповідник 1
+            </span>
+
+            <div class="editable-input">
+
+              <span>Самобутність</span>
+
+              <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                   alt="" />
+
+            </div>
+
+          </label>
+
+          <label>
+
+            <span class="meaning-title">
+              Тлумачення 1
+            </span>
+
+            <textarea></textarea>
+
+          </label>
+
+          <label>
+
+            <span class="example-equivalent-title">
+              Приклад вживання відповідника 1
+            </span>
+
+            <textarea></textarea>
+
+          </label>
+
+          <label>
+
+            <span class="example-anglicism-title">
+              Приклад вживання англізма 1
+            </span>
+
+            <textarea></textarea>
+
+          </label>
+
+          <button class="delete-equivalent-button"
+                  type="button">
+
+            Видалити відповідник
+
+          </button>
+
+        </div>
+
+      </div>
+
+      <button class="add-equivalent-button"
+              type="button">
+
+        <img src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
+             alt="" />
+
+        Додати ще один відповідник
+
+      </button>
+
+    </form>
+
+  </section>
+
+</main>
+
+<footer class="admin-footer">
+
+  <a href="improve.html"
+     class="user-site-button">
+
+    Користувацький сайт
+
+  </a>
+
+</footer>
+
+<div id="confirm-popup"
+     class="confirm-popup">
+
+  <div class="confirm-window">
+
+    <div class="confirm-header">
+      <h2>Увага</h2>
+    </div>
+
+    <p class="confirm-text">
+      Ви впевнені, що хочете виконати цю дію?
+    </p>
+
+    <div class="confirm-actions">
+
+      <button class="confirm-yes"
+              type="button">
+
+        Так
+
+      </button>
+
+      <button class="confirm-no"
+              type="button">
+
+        Ні
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  const confirmPopup = document.getElementById("confirm-popup");
+  const confirmText = document.querySelector(".confirm-text");
+  const confirmYes = document.querySelector(".confirm-yes");
+  const confirmNo = document.querySelector(".confirm-no");
+
+  const equivalentsContainer = document.getElementById("equivalents-container");
+  const addEquivalentButton = document.querySelector(".add-equivalent-button");
+
+  let currentAction = null;
+  let currentForm = null;
+  let blockToDelete = null;
+
+  function openConfirm(text) {
+    confirmText.textContent = text;
+    confirmPopup.classList.add("show");
+  }
+
+  function closeConfirm() {
+    confirmPopup.classList.remove("show");
+    currentAction = null;
+    currentForm = null;
+    blockToDelete = null;
+  }
+
+  function isBlockFilled(block) {
+    const fieldsFilled = Array.from(block.querySelectorAll("input, textarea"))
+      .some(field => field.value.trim() !== "");
+
+    const editableFilled = Array.from(block.querySelectorAll(".editable-input span"))
+      .some(field => field.textContent.trim() !== "");
+
+    return fieldsFilled || editableFilled;
+  }
+
+  function updateEquivalentNumbers() {
+    const blocks = equivalentsContainer.querySelectorAll(".equivalent-block");
+
+    blocks.forEach((block, index) => {
+      const number = index + 1;
+
+      block.querySelector(".equivalent-title").textContent = `Відповідник ${number}`;
+      block.querySelector(".meaning-title").textContent = `Тлумачення ${number}`;
+      block.querySelector(".example-equivalent-title").textContent = `Приклад вживання відповідника ${number}`;
+      block.querySelector(".example-anglicism-title").textContent = `Приклад вживання англізма ${number}`;
+    });
+
+    blocks.forEach(block => {
+      const deleteButton = block.querySelector(".delete-equivalent-button");
+      deleteButton.style.display = blocks.length > 1 ? "flex" : "none";
+    });
+  }
+
+  function createEquivalentBlock() {
+    const number = equivalentsContainer.querySelectorAll(".equivalent-block").length + 1;
+
+    const block = document.createElement("div");
+
+    block.className = "equivalent-block";
+
+    block.innerHTML = `
+      <label class="short-field">
+        <span class="equivalent-title">Відповідник ${number}</span>
+        <input type="text" />
+      </label>
+
+      <label>
+        <span class="meaning-title">Тлумачення ${number}</span>
+        <textarea></textarea>
+      </label>
+
+      <label>
+        <span class="example-equivalent-title">Приклад вживання відповідника ${number}</span>
+        <textarea></textarea>
+      </label>
+
+      <label>
+        <span class="example-anglicism-title">Приклад вживання англізма ${number}</span>
+        <textarea></textarea>
+      </label>
+
+      <button class="delete-equivalent-button" type="button">
+        Видалити відповідник
+      </button>
+    `;
+
+    return block;
+  }
+
+  addEquivalentButton.addEventListener("click", () => {
+    equivalentsContainer.appendChild(createEquivalentBlock());
+    updateEquivalentNumbers();
+  });
+
+  equivalentsContainer.addEventListener("click", event => {
+    const deleteButton = event.target.closest(".delete-equivalent-button");
+
+    if (!deleteButton) return;
+
+    const blocks = equivalentsContainer.querySelectorAll(".equivalent-block");
+
+    if (blocks.length <= 1) return;
+
+    const block = deleteButton.closest(".equivalent-block");
+
+    if (isBlockFilled(block)) {
+      blockToDelete = block;
+      openConfirm("Ви впевнені, що хочете видалити відповідник?");
+    } else {
+      block.remove();
+      updateEquivalentNumbers();
+    }
+  });
+
+  document.querySelectorAll("[data-confirm]").forEach(button => {
+    button.addEventListener("click", function(event) {
+      event.preventDefault();
+
+      currentAction = this;
+
+      const formId = this.getAttribute("form");
+
+      currentForm = formId
+        ? document.getElementById(formId)
+        : this.closest("form");
+
+      openConfirm(this.dataset.confirm);
+    });
+  });
+
+  confirmNo.addEventListener("click", closeConfirm);
+
+  confirmYes.addEventListener("click", () => {
+    confirmPopup.classList.remove("show");
+
+    if (blockToDelete) {
+      blockToDelete.remove();
+      updateEquivalentNumbers();
+    } else if (currentAction && currentAction.tagName === "A") {
+      window.location.href = currentAction.href;
+    } else if (currentForm) {
+      currentForm.submit();
+    }
+
+    currentAction = null;
+    currentForm = null;
+    blockToDelete = null;
+  });
+
+  updateEquivalentNumbers();
+</script>
+
+</body>
+</html>

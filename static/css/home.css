@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "Nastup Soft";
+    src: url("/static/fonts/Nastup-Soft.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
   --bg: #f8f8f7;
   --beige: #ccc0b2;
@@ -336,7 +343,7 @@ body {
   animation: moveWords 12s linear infinite;
 }
 
-.popular-track span {
+.popular-track a {
   color: white;
   border: 2px solid white;
   border-radius: 22px;
@@ -347,6 +354,9 @@ body {
   background: transparent;
 
   transform: rotate(0deg);
+
+  text-decoration: none;
+  display: inline-block;
 }
 
 @keyframes moveWords {
@@ -362,8 +372,10 @@ body {
 .small-button,
 .wide-button,
 .main-button,
-.popular-track span {
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+.popular-track a {
+  transition: background-color 0.25s ease,
+              color 0.25s ease,
+              border-color 0.25s ease;
 }
 
 .small-button:hover,
@@ -373,7 +385,7 @@ body {
   color: #540b14;
 }
 
-.popular-track span:hover {
+.popular-track a:hover {
   background-color: #DBD189;
   color: #540b14;
   border-color: #DBD189;
@@ -382,7 +394,6 @@ body {
 .nav-item {
   transition: background-color 0.25s ease;
 }
-
 
 /* ================= SUGGEST BANNER ================= */
 
@@ -514,5 +525,4 @@ body {
     justify-content: flex-start;
     overflow: hidden;
   }
-
 }

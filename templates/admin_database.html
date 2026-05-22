@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
 
   <title>Адмін | База даних</title>
 
@@ -21,7 +22,7 @@
 
   <nav class="admin-nav">
 
-    <a href="{{ url_for('admin') }}"
+    <a href="admin_database.html"
        class="admin-nav-item active">
 
       <img src="{{ url_for('static', filename='images/іконка_база_даних.svg') }}"
@@ -34,7 +35,7 @@
 
     </a>
 
-    <a href="#"
+    <a href="admin_suggestions.html"
        class="admin-nav-item">
 
       <img src="{{ url_for('static', filename='images/іконка_лампочка.svg') }}"
@@ -47,7 +48,7 @@
 
     </a>
 
-    <a href="#"
+    <a href="admin_messages.html"
        class="admin-nav-item">
 
       <img src="{{ url_for('static', filename='images/іконка_повідомлення.svg') }}"
@@ -95,44 +96,59 @@
 
       <div class="alphabet-row">
 
-        <button class="letter-active">А</button>
-        <button>Б</button>
-        <button>В</button>
-        <button>Г</button>
-        <button>Ґ</button>
-        <button>Д</button>
-        <button>Е</button>
-        <button>Є</button>
-        <button>Ж</button>
-        <button>З</button>
-        <button>И</button>
-        <button>І</button>
-        <button>Ї</button>
-        <button>Й</button>
-        <button>К</button>
-        <button>Л</button>
-        <button>М</button>
+        <button class="letter-button"
+                type="button"
+                data-letter="ALL">
+
+          Все
+
+        </button>
+
+        <button class="letter-button letter-active"
+                type="button"
+                data-letter="А">
+
+          А
+
+        </button>
+
+        <button class="letter-button" type="button" data-letter="Б">Б</button>
+        <button class="letter-button" type="button" data-letter="В">В</button>
+        <button class="letter-button" type="button" data-letter="Г">Г</button>
+        <button class="letter-button" type="button" data-letter="Ґ">Ґ</button>
+        <button class="letter-button" type="button" data-letter="Д">Д</button>
+        <button class="letter-button" type="button" data-letter="Е">Е</button>
+        <button class="letter-button" type="button" data-letter="Є">Є</button>
+        <button class="letter-button" type="button" data-letter="Ж">Ж</button>
+        <button class="letter-button" type="button" data-letter="З">З</button>
+        <button class="letter-button" type="button" data-letter="И">И</button>
+        <button class="letter-button" type="button" data-letter="І">І</button>
+        <button class="letter-button" type="button" data-letter="Ї">Ї</button>
+        <button class="letter-button" type="button" data-letter="Й">Й</button>
+        <button class="letter-button" type="button" data-letter="К">К</button>
+        <button class="letter-button" type="button" data-letter="Л">Л</button>
+        <button class="letter-button" type="button" data-letter="М">М</button>
 
       </div>
 
       <div class="alphabet-row">
 
-        <button>Н</button>
-        <button>О</button>
-        <button>П</button>
-        <button>Р</button>
-        <button>С</button>
-        <button>Т</button>
-        <button>У</button>
-        <button>Ф</button>
-        <button>Х</button>
-        <button>Ц</button>
-        <button>Ч</button>
-        <button>Ш</button>
-        <button>Щ</button>
-        <button>Ь</button>
-        <button>Ю</button>
-        <button>Я</button>
+        <button class="letter-button" type="button" data-letter="Н">Н</button>
+        <button class="letter-button" type="button" data-letter="О">О</button>
+        <button class="letter-button" type="button" data-letter="П">П</button>
+        <button class="letter-button" type="button" data-letter="Р">Р</button>
+        <button class="letter-button" type="button" data-letter="С">С</button>
+        <button class="letter-button" type="button" data-letter="Т">Т</button>
+        <button class="letter-button" type="button" data-letter="У">У</button>
+        <button class="letter-button" type="button" data-letter="Ф">Ф</button>
+        <button class="letter-button" type="button" data-letter="Х">Х</button>
+        <button class="letter-button" type="button" data-letter="Ц">Ц</button>
+        <button class="letter-button" type="button" data-letter="Ч">Ч</button>
+        <button class="letter-button" type="button" data-letter="Ш">Ш</button>
+        <button class="letter-button" type="button" data-letter="Щ">Щ</button>
+        <button class="letter-button" type="button" data-letter="Ь">Ь</button>
+        <button class="letter-button" type="button" data-letter="Ю">Ю</button>
+        <button class="letter-button" type="button" data-letter="Я">Я</button>
 
       </div>
 
@@ -144,176 +160,254 @@
 
     <div class="database-header">
 
-      <h1>
-        База даних англізмів та відповідників
-      </h1>
+      <h1>База даних англізмів та відповідників</h1>
 
-      <button class="add-button">
+      <a href="admin_add_anglicism.html"
+         class="add-button">
 
         <img src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
              alt="" />
 
         Додати англізм
 
-      </button>
+      </a>
 
     </div>
 
     <div class="database-grid">
 
-      <div class="word-row">
+  {% for item in anglicisms %}
 
-        <span>апгрейд</span>
+  <div class="word-row"
+       data-letter="{{ item.anglicism[0]|upper }}">
 
-        <div class="actions">
+    <span>{{ item.anglicism }}</span>
 
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
-          </button>
+    <div class="actions">
 
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-          </button>
+      <a href="admin_edit_anglicism.html"
+         class="icon-button">
 
-        </div>
+        <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+             alt="Редагувати" />
 
-      </div>
+      </a>
 
-      <div class="word-row">
+      <button class="icon-button delete-item-button"
+              type="button"
+              data-id="{{ item.id }}"
+              data-confirm="Ви впевнені, що хочете видалити англізм з бази даних?">
 
-        <span>блеймити</span>
+        <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
+             alt="Видалити" />
 
-        <div class="actions">
-
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
-          </button>
-
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="word-row">
-
-        <span>апгрейдити</span>
-
-        <div class="actions">
-
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
-          </button>
-
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="word-row">
-
-        <span>букати</span>
-
-        <div class="actions">
-
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
-          </button>
-
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="word-row">
-
-        <span>апгрейднутий</span>
-
-        <div class="actions">
-
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
-          </button>
-
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="word-row">
-
-        <span>буккросинг</span>
-
-        <div class="actions">
-
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
-          </button>
-
-          <button>
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-          </button>
-
-        </div>
-
-      </div>
+      </button>
 
     </div>
 
-    <div class="pagination">
+  </div>
 
-      <button class="page-button disabled"
-              type="button">«</button>
+  {% endfor %}
 
-      <button class="page-button disabled"
-              type="button">‹</button>
+  <p class="empty-message"
+     style="display: none;">
 
-      <button class="page-button disabled current-page"
-              type="button">1</button>
+    Список порожній
 
-      <button class="page-button active-page"
-              type="button">2</button>
+  </p>
 
-      <button class="page-button active-page"
-              type="button">3</button>
-
-      <button class="page-button active-page"
-              type="button">4</button>
-
-      <button class="page-button active-page"
-              type="button">›</button>
-
-      <button class="page-button active-page"
-              type="button">»</button>
-
-    </div>
+</div>
 
   </section>
 
 </main>
+
+<footer class="admin-footer">
+
+  <a href="improve.html"
+     class="user-site-button">
+
+    Користувацький сайт
+
+  </a>
+
+</footer>
+
+<div id="confirm-popup"
+     class="confirm-popup">
+
+  <div class="confirm-window">
+
+    <div class="confirm-header">
+      <h2>Увага</h2>
+    </div>
+
+    <p class="confirm-text">
+      Ви впевнені, що хочете виконати цю дію?
+    </p>
+
+    <div class="confirm-actions">
+
+      <button class="confirm-no"
+              type="button">
+
+        Ні
+
+      </button>
+
+      <button class="confirm-yes"
+              type="button">
+
+        Так
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const confirmPopup = document.getElementById("confirm-popup");
+
+const confirmText = document.querySelector(".confirm-text");
+
+const confirmYes = document.querySelector(".confirm-yes");
+
+const confirmNo = document.querySelector(".confirm-no");
+
+const emptyMessage = document.querySelector(".empty-message");
+
+let rowToDelete = null;
+
+
+document.querySelectorAll("[data-confirm]").forEach(button => {
+
+  button.addEventListener("click", event => {
+
+    event.preventDefault();
+
+    confirmText.textContent = button.dataset.confirm;
+
+    rowToDelete = button.closest(".word-row");
+
+    confirmPopup.classList.add("show");
+
+  });
+
+});
+
+
+confirmNo.addEventListener("click", () => {
+
+  confirmPopup.classList.remove("show");
+
+  rowToDelete = null;
+
+});
+
+
+confirmYes.addEventListener("click", async () => {
+
+  if (rowToDelete) {
+
+    const deleteButton =
+      rowToDelete.querySelector(".delete-item-button");
+
+    const anglicismId =
+      deleteButton.dataset.id;
+
+    try {
+
+      const response = await fetch(
+        `/admin/delete/${anglicismId}`,
+        {
+          method: "POST"
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.ok) {
+
+        rowToDelete.remove();
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  }
+
+  confirmPopup.classList.remove("show");
+
+  rowToDelete = null;
+
+});
+
+
+const letterButtons =
+  document.querySelectorAll(".letter-button");
+
+const wordRows =
+  document.querySelectorAll(".word-row");
+
+
+letterButtons.forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const selectedLetter =
+      button.dataset.letter;
+
+    letterButtons.forEach(btn => {
+      btn.classList.remove("letter-active");
+    });
+
+    button.classList.add("letter-active");
+
+    let visibleCount = 0;
+
+    wordRows.forEach(row => {
+
+      if (
+        selectedLetter === "ALL"
+        ||
+        row.dataset.letter === selectedLetter
+      ) {
+
+        row.style.display = "flex";
+
+        visibleCount++;
+
+      } else {
+
+        row.style.display = "none";
+
+      }
+
+    });
+
+    if (visibleCount === 0) {
+
+      emptyMessage.style.display = "block";
+
+    } else {
+
+      emptyMessage.style.display = "none";
+
+    }
+
+  });
+
+});
+
+</script>
 
 </body>
 </html>

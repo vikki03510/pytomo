@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
 
   <title>Платформа Питомо</title>
 
@@ -84,18 +85,31 @@
 
       <div class="word-content">
 
-        <h2>девелопер</h2>
+        <h2>{{ word_of_the_day.anglicism }}</h2>
 
         <p class="equivalent">
+
           Відповідники:
-          <span>розробник</span>
+          <span>{{ word_of_the_day.replacement }}</span>
+
         </p>
 
-        <div class="tag">/іменник/</div>
+        <div class="tag">
+
+          /{{ word_of_the_day.part_of_speech }}/
+
+        </div>
 
         <p class="definition">
-          Підприємець/організація, що ініціює і забезпечує реалізацію...
-          <a href="#">Читати більше</a>
+
+          {{ word_of_the_day.definition[:120] }}...
+
+          <a href="{{ url_for('dictionary') }}?word={{ word_of_the_day.id }}">
+
+            Читати більше
+
+          </a>
+
         </p>
 
         <button class="small-button">
@@ -113,11 +127,13 @@
       </div>
 
       <div class="digits">
-        <span></span>
-        <span></span>
-        <span>2</span>
-        <span>5</span>
-        <span>4</span>
+
+        {% set count_string = anglicisms_count|string %}
+
+        {% for digit in count_string %}
+          <span>{{ digit }}</span>
+        {% endfor %}
+
       </div>
 
       <p class="count-text">
@@ -150,41 +166,49 @@
 
       <div class="popular-track">
 
-        <span>фейл</span>
-        <span>кейс</span>
-        <span>булінг</span>
-        <span>лінк</span>
-        <span>скриншот</span>
-        <span>тренінг</span>
-        <span>слайд</span>
-        <span>білборд</span>
+        {% for item in recent_anglicisms %}
 
-        <span>фейл</span>
-        <span>кейс</span>
-        <span>булінг</span>
-        <span>лінк</span>
-        <span>скриншот</span>
-        <span>тренінг</span>
-        <span>слайд</span>
-        <span>білборд</span>
+          <a href="{{ url_for('dictionary') }}?word={{ item[0] }}"
+             class="scroll-word">
 
-        <span>фейл</span>
-        <span>кейс</span>
-        <span>булінг</span>
-        <span>лінк</span>
-        <span>скриншот</span>
-        <span>тренінг</span>
-        <span>слайд</span>
-        <span>білборд</span>
+            {{ item[1] }}
 
-        <span>фейл</span>
-        <span>кейс</span>
-        <span>булінг</span>
-        <span>лінк</span>
-        <span>скриншот</span>
-        <span>тренінг</span>
-        <span>слайд</span>
-        <span>білборд</span>
+          </a>
+
+        {% endfor %}
+
+        {% for item in recent_anglicisms %}
+
+          <a href="{{ url_for('dictionary') }}?word={{ item[0] }}"
+             class="scroll-word">
+
+            {{ item[1] }}
+
+          </a>
+
+        {% endfor %}
+
+        {% for item in recent_anglicisms %}
+
+          <a href="{{ url_for('dictionary') }}?word={{ item[0] }}"
+             class="scroll-word">
+
+            {{ item[1] }}
+
+          </a>
+
+        {% endfor %}
+
+        {% for item in recent_anglicisms %}
+
+          <a href="{{ url_for('dictionary') }}?word={{ item[0] }}"
+             class="scroll-word">
+
+            {{ item[1] }}
+
+          </a>
+
+        {% endfor %}
 
       </div>
 

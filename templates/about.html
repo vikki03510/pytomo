@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,54 +21,79 @@
 
   <nav class="nav">
 
-    <a href="{{ url_for('home') }}" class="nav-item">
-      <img src="{{ url_for('static', filename='images/іконка_home.svg') }}" alt="" />
+    <a href="{{ url_for('home') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_home.svg') }}"
+           alt="" />
 
       <div class="nav-text">
         <span>Домашня</span>
         <small>Основна інформація</small>
       </div>
+
     </a>
 
-    <a href="{{ url_for('dictionary') }}" class="nav-item">
-      <img src="{{ url_for('static', filename='images/іконка_словник.svg') }}" alt="" />
+    <a href="{{ url_for('dictionary') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_словник.svg') }}"
+           alt="" />
 
       <div class="nav-text">
         <span>Словник</span>
         <small>Англізми та відповідники</small>
       </div>
+
     </a>
 
-    <a href="{{ url_for('improve') }}" class="nav-item">
-      <img src="{{ url_for('static', filename='images/іконка_text_improvement.svg') }}" alt="" />
+    <a href="{{ url_for('improve') }}"
+       class="nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_text_improvement.svg') }}"
+           alt="" />
 
       <div class="nav-text">
         <span>Покращити текст</span>
         <small>Прибрати англізми з тексту</small>
       </div>
+
     </a>
 
   </nav>
+
 </header>
 
 <main>
 
   <section class="about-title">
+
     <img src="{{ url_for('static', filename='images/About_us_title.svg') }}"
          alt="Ласкаво просимо до платформи Питомо" />
+
   </section>
 
   <section class="about-section">
+
     <img src="{{ url_for('static', filename='images/About_us_section.svg') }}"
          alt="Інформація про платформу Питомо" />
+
   </section>
 
   <section class="suggest-banner">
-    <h2>Знайшов англізм?<br>Запропонуй відповідник</h2>
 
-    <a href="{{ url_for('suggest') }}" class="main-button">
+    <h2>
+      Знайшов англізм?<br>
+      Запропонуй відповідник
+    </h2>
+
+    <a href="{{ url_for('suggest') }}"
+       class="main-button">
+
       Запропонувати англізм
+
     </a>
+
   </section>
 
 </main>
@@ -75,13 +101,18 @@
 <footer class="footer">
 
   <div class="footer-links">
-    <a href="{{ url_for('about') }}" class="active-footer">
+
+    <a href="{{ url_for('about') }}"
+       class="active-footer">
+
       Про нас
+
     </a>
 
     <a href="{{ url_for('contacts') }}">
       Контакти
     </a>
+
   </div>
 
   <div class="footer-bottom">

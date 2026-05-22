@@ -61,8 +61,21 @@ body {
   transition: all 0.35s ease;
   z-index: 0;
 
-  width: 360px;
-  transform: translateX(0);
+  width: 330px;
+  transform: translateX(390px);
+}
+
+.suggestions-header {
+  grid-template-columns: 1fr;
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suggestions-header h1 {
+  width: 100%;
+  text-align: center;
 }
 
 .admin-nav:has(.admin-nav-item:nth-child(1):hover)::before {
@@ -224,26 +237,6 @@ body {
   color: #540b14;
 }
 
-.add-button {
-  text-decoration: none;
-}
-
-.actions a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.actions a img {
-  width: 28px;
-  height: 28px;
-  transition: filter 0.25s ease;
-}
-
-.actions a:hover img {
-  filter: brightness(0) saturate(100%) invert(84%) sepia(21%) saturate(509%) hue-rotate(11deg) brightness(97%) contrast(89%);
-}
-
 .database-section {
   width: 1100px;
   margin: 42px auto 70px;
@@ -255,11 +248,10 @@ body {
   border: 2px solid var(--brown);
   border-bottom: none;
   border-radius: 8px 8px 0 0;
-
-  display: grid;
-  grid-template-columns: 1fr 250px;
+  display: flex;
   align-items: center;
-  padding-left: 74px;
+  justify-content: center;
+  padding-left: 0;
 }
 
 .database-header h1 {
@@ -357,6 +349,30 @@ body {
 
 .actions button:hover img {
   filter: brightness(0) saturate(100%) invert(84%) sepia(21%) saturate(509%) hue-rotate(11deg) brightness(97%) contrast(89%);
+}
+
+.actions .icon-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.actions .icon-button img {
+  width: 28px;
+  height: 28px;
+  display: block;
+  transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.actions .icon-button:hover img {
+  filter: brightness(0) saturate(100%) invert(84%) sepia(21%) saturate(509%) hue-rotate(11deg) brightness(97%) contrast(89%);
+  transform: scale(1.08);
 }
 
 .pagination {

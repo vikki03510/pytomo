@@ -60,9 +60,8 @@ body {
   border-radius: 7px;
   transition: all 0.35s ease;
   z-index: 0;
-
-  width: 360px;
-  transform: translateX(0);
+  width: 400px;
+  transform: translateX(700px);
 }
 
 .admin-nav:has(.admin-nav-item:nth-child(1):hover)::before {
@@ -91,11 +90,6 @@ body {
   z-index: 1;
 }
 
-.admin-nav-item.active,
-.admin-nav-item:hover {
-  background: transparent;
-}
-
 .admin-nav-item img {
   width: 34px;
   height: 34px;
@@ -118,151 +112,23 @@ body {
   text-align: center;
 }
 
-.admin-search-section {
+.messages-section {
   width: 1100px;
-  margin: 36px auto 0;
+  margin: 36px auto 70px;
 }
 
-.admin-search-form {
-  width: 100%;
-  height: 58px;
-  display: grid;
-  grid-template-columns: 1fr 64px;
-  border: 2px solid var(--brown);
-  border-radius: 14px;
-  overflow: hidden;
-  background: var(--bg);
-}
-
-.admin-search-form input {
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: 0 22px;
-  font-size: 18px;
-  color: var(--dark);
-}
-
-.admin-search-form input::placeholder {
-  color: var(--beige);
-}
-
-.admin-search-form button {
-  border: none;
-  background: var(--yellow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.admin-search-form button img {
-  width: 34px;
-  height: 34px;
-}
-
-.alphabet-section {
-  height: 245px;
-  margin-top: 36px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.alphabet-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.alphabet-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  position: relative;
-  z-index: 1;
-}
-
-.alphabet-row {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-}
-
-.alphabet-buttons button {
-  width: 44px;
-  height: 44px;
-  border: 2px solid white;
-  border-radius: 999px;
-  background: transparent;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-}
-
-.alphabet-buttons button:hover {
-  background: #DBD189;
-  border-color: #DBD189;
-  color: #540b14;
-}
-
-.alphabet-buttons .letter-active {
-  background: #540B14;
-  border-color: white;
-  color: white;
-}
-
-.alphabet-buttons .letter-active:hover {
-  background: #DBD189;
-  border-color: #DBD189;
-  color: #540b14;
-}
-
-.add-button {
-  text-decoration: none;
-}
-
-.actions a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.actions a img {
-  width: 28px;
-  height: 28px;
-  transition: filter 0.25s ease;
-}
-
-.actions a:hover img {
-  filter: brightness(0) saturate(100%) invert(84%) sepia(21%) saturate(509%) hue-rotate(11deg) brightness(97%) contrast(89%);
-}
-
-.database-section {
-  width: 1100px;
-  margin: 42px auto 70px;
-}
-
-.database-header {
+.messages-header {
   height: 72px;
   background: var(--yellow);
   border: 2px solid var(--brown);
   border-bottom: none;
   border-radius: 8px 8px 0 0;
-
-  display: grid;
-  grid-template-columns: 1fr 250px;
+  display: flex;
   align-items: center;
-  padding-left: 74px;
+  justify-content: center;
 }
 
-.database-header h1 {
+.messages-header h1 {
   margin: 0;
   font-family: "Nastup Soft", Impact, sans-serif;
   font-size: 24px;
@@ -270,92 +136,86 @@ body {
   color: var(--wine);
 }
 
-.add-button {
-  height: 64px;
-  margin-right: 12px;
-  border: none;
-  border-radius: 32px;
-  background: var(--wine);
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: background-color 0.25s ease, color 0.25s ease;
-}
-
-.add-button:hover {
-  background: var(--yellow);
-  color: var(--wine);
-  outline: 2px solid var(--wine);
-}
-
-.add-button img {
-  width: 26px;
-  height: 26px;
-}
-
-.database-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-}
-
-.word-row {
-  height: 52px;
+.message-card {
   border: 2px solid var(--brown);
   border-radius: 8px;
-
-  display: grid;
-  grid-template-columns: 1fr 110px;
-  align-items: center;
-  padding-left: 30px;
   margin-top: -2px;
   background: var(--bg);
+  overflow: hidden;
 }
 
-.word-row:nth-child(odd) {
-  margin-right: -1px;
+.message-toggle {
+  display: none;
 }
 
-.word-row:nth-child(even) {
-  margin-left: -1px;
+.message-content {
+  position: relative;
+  padding: 28px 70px 34px 38px;
 }
 
-.word-row span {
+.message-content h2 {
+  margin: 0 0 18px;
   font-family: "Nastup Soft", Impact, sans-serif;
-  font-size: 22px;
+  font-size: 24px;
   text-transform: uppercase;
+  color: var(--dark);
+  letter-spacing: 1.2px;
+}
+}
+
+.contact {
+  margin: 0 0 12px;
+  color: var(--beige);
+  font-size: 18px;
+}
+
+.message-text {
+  max-height: 92px;
+  overflow: hidden;
+  margin: 18px 0 0;
+  font-size: 18px;
+  line-height: 1.35;
   color: var(--dark);
 }
 
-.actions {
-  display: flex;
-  gap: 18px;
-  justify-content: center;
+.message-toggle:checked ~ .message-content .message-text {
+  max-height: 500px;
 }
 
-.actions button {
+.read-more {
+  display: inline-block;
+  margin-top: 4px;
+  color: #2f8edb;
+  font-size: 18px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.read-more::after {
+  content: "Читати повністю";
+}
+
+.message-toggle:checked ~ .message-content .read-more::after {
+  content: "Згорнути";
+}
+
+.delete-button {
+  position: absolute;
+  top: 24px;
+  right: 34px;
   border: none;
   background: transparent;
-  cursor: pointer;
   padding: 0;
+  cursor: pointer;
 }
 
-.actions img {
-  width: 28px;
-  height: 28px;
-}
-
-.actions button img {
-  width: 28px;
-  height: 28px;
+.delete-button img {
+  width: 34px;
+  height: 34px;
   transition: filter 0.25s ease;
 }
 
-.actions button:hover img {
+.delete-button:hover img {
   filter: brightness(0) saturate(100%) invert(84%) sepia(21%) saturate(509%) hue-rotate(11deg) brightness(97%) contrast(89%);
 }
 
@@ -391,6 +251,27 @@ body {
 
 .page-button.current-page {
   color: #CCC0B2;
+}
+
+.admin-footer {
+  width: 100%;
+  height: 110px;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-site-button {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 18px;
+  transition: color 0.25s ease;
+}
+
+.user-site-button:hover {
+  color: #DBD189;
 }
 
 .confirm-popup {
@@ -467,28 +348,4 @@ body {
 .confirm-actions button:hover {
   background: var(--yellow);
   color: var(--wine);
-}
-
-/* ADMIN FOOTER */
-
-.admin-footer {
-  width: 100%;
-  height: 110px;
-  background: var(--dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 70px;
-}
-
-.user-site-button {
-  color: white;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 18px;
-  transition: color 0.25s ease;
-}
-
-.user-site-button:hover {
-  color: #DBD189;
 }

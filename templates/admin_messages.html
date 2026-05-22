@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Адмін | Повідомлення</title>
+
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/admin_messages.css') }}">
+</head>
+
+<body>
+
+<header class="admin-header">
+
+  <img class="logo"
+       src="{{ url_for('static', filename='images/Лого.svg') }}"
+       alt="Платформа Питомо" />
+
+  <nav class="admin-nav">
+
+    <a href="{{ url_for('admin_database') }}"
+       class="admin-nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_база_даних.svg') }}"
+           alt="" />
+
+      <div>
+        <span>База даних</span>
+        <small>Редагувати базу</small>
+      </div>
+
+    </a>
+
+    <a href="{{ url_for('admin_suggestions') }}"
+       class="admin-nav-item">
+
+      <img src="{{ url_for('static', filename='images/іконка_лампочка.svg') }}"
+           alt="" />
+
+      <div>
+        <span>Пропозиції</span>
+        <small>Ідеї відповідників</small>
+      </div>
+
+    </a>
+
+    <a href="{{ url_for('admin_messages') }}"
+       class="admin-nav-item active">
+
+      <img src="{{ url_for('static', filename='images/іконка_повідомлення.svg') }}"
+           alt="" />
+
+      <div>
+        <span>Повідомлення</span>
+        <small>Зв’язок із користувачами</small>
+      </div>
+
+    </a>
+
+  </nav>
+
+</header>
+
+<main>
+
+  <section class="messages-section">
+
+    <div class="messages-header">
+      <h1>Повідомлення від користувачів</h1>
+    </div>
+
+    <article class="message-card">
+
+      <input type="checkbox"
+             id="msg1"
+             class="message-toggle" />
+
+      <div class="message-content">
+
+        <button class="delete-button"
+                type="button"
+                data-confirm="Ви впевнені, що хочете видалити повідомлення?">
+
+          <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
+               alt="Видалити" />
+
+        </button>
+
+        <h2>Тарас Шевченко</h2>
+
+        <p class="contact">
+          tarasshevchenko@gmail.com
+        </p>
+
+        <p class="contact">
+          +380123456789
+        </p>
+
+        <p class="message-text">
+          Доброго дня!<br>
+          Хотіла б запропонувати невелике покращення для платформи. Було б дуже зручно додати можливість переглядати історію виправлень або збережені версії тексту після редагування. Це допомогло б користувачам порівнювати зміни та повертатись до попередніх варіантів тексту при потребі. Також було б корисно додати позначення, які саме англізми були замінені.
+        </p>
+
+        <label for="msg1"
+               class="read-more"></label>
+
+      </div>
+
+    </article>
+
+    <article class="message-card">
+
+      <input type="checkbox"
+             id="msg2"
+             class="message-toggle" />
+
+      <div class="message-content">
+
+        <button class="delete-button"
+                type="button"
+                data-confirm="Ви впевнені, що хочете видалити повідомлення?">
+
+          <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
+               alt="Видалити" />
+
+        </button>
+
+        <h2>Леся Українка</h2>
+
+        <p class="contact">
+          lesyalesya@gmail.com
+        </p>
+
+        <p class="contact">
+          +380987654321
+        </p>
+
+        <p class="message-text">
+          Маю невелику пропозицію щодо платформи. Було б дуже зручно додати можливість підсвічування слів, які система вважає англізмами або небажаними запозиченнями, ще до автоматичного виправлення тексту. Це зробило б процес редагування більш зрозумілим для користувача і допомогло б краще бачити, які саме слова потребують заміни.
+        </p>
+
+        <label for="msg2"
+               class="read-more"></label>
+
+      </div>
+
+    </article>
+
+    <div class="pagination">
+
+      <button class="page-button disabled"
+              type="button">
+
+        «
+
+      </button>
+
+      <button class="page-button disabled"
+              type="button">
+
+        ‹
+
+      </button>
+
+      <button class="page-button disabled current-page"
+              type="button">
+
+        1
+
+      </button>
+
+      <button class="page-button active-page"
+              type="button">
+
+        ›
+
+      </button>
+
+      <button class="page-button active-page"
+              type="button">
+
+        »
+
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="admin-footer">
+
+  <a href="{{ url_for('improve') }}"
+     class="user-site-button">
+
+    Користувацький сайт
+
+  </a>
+
+</footer>
+
+<div id="confirm-popup"
+     class="confirm-popup">
+
+  <div class="confirm-window">
+
+    <div class="confirm-header">
+      <h2>Увага</h2>
+    </div>
+
+    <p class="confirm-text">
+      Ви впевнені, що хочете виконати цю дію?
+    </p>
+
+    <div class="confirm-actions">
+
+      <button class="confirm-no"
+              type="button">
+
+        Ні
+
+      </button>
+
+      <button class="confirm-yes"
+              type="button">
+
+        Так
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  const confirmPopup = document.getElementById("confirm-popup");
+  const confirmText = document.querySelector(".confirm-text");
+  const confirmYes = document.querySelector(".confirm-yes");
+  const confirmNo = document.querySelector(".confirm-no");
+
+  let cardToDelete = null;
+
+  document.querySelectorAll("[data-confirm]").forEach(button => {
+    button.addEventListener("click", event => {
+      event.preventDefault();
+
+      confirmText.textContent = button.dataset.confirm;
+
+      cardToDelete = button.closest(".message-card");
+
+      confirmPopup.classList.add("show");
+    });
+  });
+
+  confirmNo.addEventListener("click", () => {
+    confirmPopup.classList.remove("show");
+    cardToDelete = null;
+  });
+
+  confirmYes.addEventListener("click", () => {
+    if (cardToDelete) cardToDelete.remove();
+
+    confirmPopup.classList.remove("show");
+    cardToDelete = null;
+  });
+</script>
+
+</body>
+</html>

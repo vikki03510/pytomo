@@ -81,7 +81,9 @@
 
     </div>
 
-    <form class="contact-form">
+    <form class="contact-form"
+          action="#"
+          method="post">
 
       <div class="form-row">
 
@@ -149,8 +151,13 @@
 
       </label>
 
-      <button type="submit">
+      <button
+        type="submit"
+        data-confirm="Ви впевнені, що хочете надіслати повідомлення?"
+      >
+
         Надіслати
+
       </button>
 
     </form>
@@ -197,6 +204,77 @@
   </div>
 
 </footer>
+
+<div id="confirm-popup"
+     class="confirm-popup">
+
+  <div class="confirm-window">
+
+    <div class="confirm-header">
+      <h2>Увага</h2>
+    </div>
+
+    <p class="confirm-text">
+      Ви впевнені, що хочете виконати цю дію?
+    </p>
+
+    <div class="confirm-actions">
+
+      <button class="confirm-yes"
+              type="button">
+
+        Так
+
+      </button>
+
+      <button class="confirm-no"
+              type="button">
+
+        Ні
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  const confirmPopup = document.getElementById("confirm-popup");
+  const confirmText = document.querySelector(".confirm-text");
+  const confirmYes = document.querySelector(".confirm-yes");
+  const confirmNo = document.querySelector(".confirm-no");
+
+  let currentForm = null;
+
+  document.querySelectorAll("[data-confirm]").forEach(button => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      confirmText.textContent = this.dataset.confirm;
+
+      currentForm = this.closest("form");
+
+      confirmPopup.classList.add("show");
+    });
+  });
+
+  confirmNo.addEventListener("click", () => {
+    confirmPopup.classList.remove("show");
+    currentForm = null;
+  });
+
+  confirmYes.addEventListener("click", () => {
+    confirmPopup.classList.remove("show");
+
+    if (currentForm) {
+      currentForm.submit();
+    }
+
+    currentForm = null;
+  });
+</script>
 
 </body>
 </html>

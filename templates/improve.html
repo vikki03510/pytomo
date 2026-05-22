@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
 
   <title>Покращити текст | Платформа Питомо</title>
 
@@ -21,7 +22,7 @@
 
   <nav class="nav">
 
-    <a href="{{ url_for('home') }}"
+    <a href="home.html"
        class="nav-item">
 
       <img src="{{ url_for('static', filename='images/іконка_home.svg') }}"
@@ -34,7 +35,7 @@
 
     </a>
 
-    <a href="{{ url_for('dictionary') }}"
+    <a href="dictionary.html"
        class="nav-item">
 
       <img src="{{ url_for('static', filename='images/іконка_словник.svg') }}"
@@ -47,7 +48,7 @@
 
     </a>
 
-    <a href="{{ url_for('improve') }}"
+    <a href="improve.html"
        class="nav-item active">
 
       <img src="{{ url_for('static', filename='images/іконка_text_improvement.svg') }}"
@@ -66,17 +67,34 @@
 
 <main>
 
+  <div class="status-panel">
+
+    <div id="status-text"
+         class="status-text">
+
+      Звичайний режим: 10 покращень до 3000 символів.
+
+    </div>
+
+  </div>
+
   <section class="text-section">
 
     <div class="text-box input-box">
 
-      <textarea placeholder="Напиши текст, щоб його покращити"></textarea>
+      <div
+        id="input-editor"
+        class="editable-text"
+        contenteditable="true"
+        data-placeholder="Напиши текст, щоб його покращити"
+      ></div>
 
     </div>
 
     <div class="text-box output-box">
 
-      <textarea readonly></textarea>
+      <div id="output-result"
+           class="output-result"></div>
 
     </div>
 
@@ -89,7 +107,7 @@
       Запропонуй відповідник
     </h2>
 
-    <a href="{{ url_for('suggest') }}"
+    <a href="suggest.html"
        class="main-button">
 
       Запропонувати англізм
@@ -104,11 +122,11 @@
 
   <div class="footer-links">
 
-    <a href="{{ url_for('about') }}">
+    <a href="about.html">
       Про нас
     </a>
 
-    <a href="{{ url_for('contacts') }}">
+    <a href="contacts.html">
       Контакти
     </a>
 
@@ -119,6 +137,203 @@
   </div>
 
 </footer>
+
+<div id="replacement-popup"
+     class="replacement-popup">
+
+  <button id="replace-title"
+          class="replace-title"
+          type="button">
+
+    Замінити відповідник
+
+  </button>
+
+  <div id="replacement-list"
+       class="replacement-list"></div>
+
+</div>
+
+<script>
+  const inputEditor = document.getElementById("input-editor");
+  const outputResult = document.getElementById("output-result");
+  const statusText = document.getElementById("status-text");
+
+  const replacementPopup = document.getElementById("replacement-popup");
+  const replacementList = document.getElementById("replacement-list");
+
+  let typingTimer = null;
+  let changes = [];
+  let activeSpan = null;
+  let lastText = "";
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const adminToken = urlParams.get("admin");
+
+  if (adminToken) {
+    statusText.textContent = "Адмін-режим: покращення без обмежень.";
+  }
+
+  function getPlainTextFromEditor() {
+    return inputEditor.innerText.replace(/\u00A0/g, " ").trim();
+  }
+
+  function closeReplacementPopup() {
+    replacementPopup.style.display = "none";
+    replacementList.innerHTML = "";
+    activeSpan = null;
+  }
+
+  function moveCaretToEnd(element) {
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    range.selectNodeContents(element);
+    range.collapse(false);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+
+  async function improveText() {
+    const text = getPlainTextFromEditor();
+
+    closeReplacementPopup();
+
+    if (!text) {
+      outputResult.innerHTML = "";
+
+      statusText.textContent = adminToken
+        ? "Адмін-режим: покращення без обмежень."
+        : "Звичайний режим: 10 покращень до 3000 символів.";
+
+      return;
+    }
+
+    if (text === lastText) return;
+
+    lastText = text;
+
+    statusText.textContent = "Покращую текст...";
+
+    try {
+      const response = await fetch("/api/improve", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          text: text,
+          admin_token: adminToken
+        })
+      });
+
+      const data = await response.json();
+
+      if (!data.ok) {
+        statusText.textContent = data.error || "Сталася помилка.";
+        return;
+      }
+
+      inputEditor.innerHTML = data.input_html;
+
+      moveCaretToEnd(inputEditor);
+
+      outputResult.innerHTML = data.output_html;
+
+      changes = data.changes || [];
+
+      if (adminToken) {
+        statusText.textContent = "Адмін-режим: покращення без обмежень.";
+      } else {
+        statusText.textContent = `Залишилось безкоштовних покращень: ${data.remaining}.`;
+      }
+
+    } catch (error) {
+      statusText.textContent = "Не вдалося підключитися до сервера.";
+    }
+  }
+
+  inputEditor.addEventListener("input", () => {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(improveText, 2000);
+  });
+
+  outputResult.addEventListener("click", event => {
+    const span = event.target.closest(".replaced-word");
+
+    if (!span) {
+      closeReplacementPopup();
+      return;
+    }
+
+    const index = Number(span.dataset.index);
+
+    const change = changes.find(item => item.index === index);
+
+    if (!change || !change.alternatives || change.alternatives.length <= 1) {
+      closeReplacementPopup();
+      return;
+    }
+
+    activeSpan = span;
+
+    replacementList.innerHTML = "";
+
+    change.alternatives.forEach(option => {
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.textContent = option;
+
+      button.addEventListener("click", async () => {
+        const response = await fetch("/api/replace-option", {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            context: outputResult.innerText,
+            original: change.original,
+            replacement: option
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.ok) {
+          activeSpan.textContent = data.replacement;
+        } else {
+          activeSpan.textContent = option;
+        }
+
+        closeReplacementPopup();
+      });
+
+      replacementList.appendChild(button);
+    });
+
+    const rect = span.getBoundingClientRect();
+
+    replacementPopup.style.left = `${rect.left + window.scrollX}px`;
+    replacementPopup.style.top = `${rect.bottom + window.scrollY + 8}px`;
+
+    replacementPopup.style.display = "block";
+  });
+
+  document.addEventListener("click", event => {
+    if (
+      !event.target.closest(".replaced-word") &&
+      !event.target.closest(".replacement-popup")
+    ) {
+      closeReplacementPopup();
+    }
+  });
+</script>
 
 </body>
 </html>

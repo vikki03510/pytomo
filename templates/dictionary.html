@@ -21,7 +21,8 @@
 
   <nav class="nav">
 
-    <a href="{{ url_for('home') }}" class="nav-item">
+    <a href="{{ url_for('home') }}"
+       class="nav-item">
 
       <img src="{{ url_for('static', filename='images/іконка_home.svg') }}"
            alt="" />
@@ -67,12 +68,15 @@
 
   <section class="search-section">
 
-    <form class="search-form">
+    <form class="search-form"
+          onsubmit="return false;">
 
       <input type="text"
+             id="search-input"
              placeholder="Введіть англізм для пошуку" />
 
-      <button type="submit" aria-label="Пошук">
+      <button type="submit"
+              aria-label="Пошук">
 
         <img src="{{ url_for('static', filename='images/іконка_пошук.svg') }}"
              alt="" />
@@ -93,46 +97,52 @@
 
       <div class="alphabet-row">
 
-        <button class="all-button">Все</button>
+        <button class="all-button active-letter"
+                type="button"
+                data-letter="ALL">
 
-        <button class="letter-active">А</button>
-        <button>Б</button>
-        <button>В</button>
-        <button>Г</button>
-        <button>Ґ</button>
-        <button>Д</button>
-        <button>Е</button>
-        <button>Є</button>
-        <button>Ж</button>
-        <button>З</button>
-        <button>И</button>
-        <button>І</button>
-        <button>Ї</button>
-        <button>Й</button>
-        <button>К</button>
-        <button>Л</button>
+          Все
+
+        </button>
+
+        <button class="letter-button" type="button" data-letter="А">А</button>
+        <button class="letter-button" type="button" data-letter="Б">Б</button>
+        <button class="letter-button" type="button" data-letter="В">В</button>
+        <button class="letter-button" type="button" data-letter="Г">Г</button>
+        <button class="letter-button" type="button" data-letter="Ґ">Ґ</button>
+        <button class="letter-button" type="button" data-letter="Д">Д</button>
+        <button class="letter-button" type="button" data-letter="Е">Е</button>
+        <button class="letter-button" type="button" data-letter="Є">Є</button>
+        <button class="letter-button" type="button" data-letter="Ж">Ж</button>
+        <button class="letter-button" type="button" data-letter="З">З</button>
+        <button class="letter-button" type="button" data-letter="И">И</button>
+        <button class="letter-button" type="button" data-letter="І">І</button>
+        <button class="letter-button" type="button" data-letter="Ї">Ї</button>
+        <button class="letter-button" type="button" data-letter="Й">Й</button>
+        <button class="letter-button" type="button" data-letter="К">К</button>
+        <button class="letter-button" type="button" data-letter="Л">Л</button>
 
       </div>
 
       <div class="alphabet-row">
 
-        <button>М</button>
-        <button>Н</button>
-        <button>О</button>
-        <button>П</button>
-        <button>Р</button>
-        <button>С</button>
-        <button>Т</button>
-        <button>У</button>
-        <button>Ф</button>
-        <button>Х</button>
-        <button>Ц</button>
-        <button>Ч</button>
-        <button>Ш</button>
-        <button>Щ</button>
-        <button>Ь</button>
-        <button>Ю</button>
-        <button>Я</button>
+        <button class="letter-button" type="button" data-letter="М">М</button>
+        <button class="letter-button" type="button" data-letter="Н">Н</button>
+        <button class="letter-button" type="button" data-letter="О">О</button>
+        <button class="letter-button" type="button" data-letter="П">П</button>
+        <button class="letter-button" type="button" data-letter="Р">Р</button>
+        <button class="letter-button" type="button" data-letter="С">С</button>
+        <button class="letter-button" type="button" data-letter="Т">Т</button>
+        <button class="letter-button" type="button" data-letter="У">У</button>
+        <button class="letter-button" type="button" data-letter="Ф">Ф</button>
+        <button class="letter-button" type="button" data-letter="Х">Х</button>
+        <button class="letter-button" type="button" data-letter="Ц">Ц</button>
+        <button class="letter-button" type="button" data-letter="Ч">Ч</button>
+        <button class="letter-button" type="button" data-letter="Ш">Ш</button>
+        <button class="letter-button" type="button" data-letter="Щ">Щ</button>
+        <button class="letter-button" type="button" data-letter="Ь">Ь</button>
+        <button class="letter-button" type="button" data-letter="Ю">Ю</button>
+        <button class="letter-button" type="button" data-letter="Я">Я</button>
 
       </div>
 
@@ -142,16 +152,37 @@
 
   <section class="dictionary-list">
 
-    <div class="letter-badge"># А</div>
+    <div class="letter-badge"
+         id="current-letter">
 
-    <div class="words-grid">
+      # Усі англізми
 
-      <a href="#" class="word-link">авторизація</a>
-      <a href="#" class="word-link">апгрейд</a>
-      <a href="#" class="word-link">апгрейт</a>
-      <a href="#" class="word-link">апгрейдити</a>
-      <a href="#" class="word-link">апгрейднутий</a>
-      <a href="#" class="word-link">апдейтити</a>
+    </div>
+
+    <div class="words-grid"
+         id="words-grid">
+
+      {% for item in anglicisms %}
+
+        <a href="{{ url_for('dictionary') }}?word={{ item.id }}"
+           class="word-link"
+           data-id="{{ item.id }}"
+           data-letter="{{ item.anglicism[0]|upper }}"
+           data-word="{{ item.anglicism|lower }}">
+
+          {{ item.anglicism }}
+
+        </a>
+
+      {% endfor %}
+
+    </div>
+
+    <div class="empty-message"
+         id="empty-message"
+         style="display: none;">
+
+      Список порожній
 
     </div>
 
@@ -194,6 +225,351 @@
   </div>
 
 </footer>
+
+
+<div id="article-popup"
+     class="article-popup">
+
+  <div class="popup-overlay"></div>
+
+  <article class="article-modal">
+
+    <header class="article-header">
+
+      <h1 id="popup-anglicism"></h1>
+
+      <button class="close-button"
+              id="close-popup">
+
+        <img src="{{ url_for('static', filename='images/іконка_закрити.svg') }}"
+             alt="" />
+
+      </button>
+
+    </header>
+
+    <section class="article-content">
+
+      <div class="info-grid">
+
+        <div class="info-card">
+
+          <h3>Частина мови</h3>
+
+          <p id="popup-part-of-speech"></p>
+
+        </div>
+
+        <div class="info-card wide-card">
+
+          <h3>Оригінальне написання</h3>
+
+          <p id="popup-original"></p>
+
+        </div>
+
+        <div class="info-card variant-card">
+
+          <h3>Варіянти написання</h3>
+
+          <p id="popup-variants"></p>
+
+        </div>
+
+      </div>
+
+      <div class="info-card definition-card">
+
+        <h3>Тлумачення англізма</h3>
+
+        <p id="popup-definition"></p>
+
+      </div>
+
+      <h2>Відповідники</h2>
+
+      <div id="popup-replacements"></div>
+
+    </section>
+
+  </article>
+
+</div>
+
+
+<script>
+
+const letterButtons = document.querySelectorAll('.letter-button');
+const allButton = document.querySelector('.all-button');
+const wordLinks = document.querySelectorAll('.word-link');
+
+const wordsGrid = document.getElementById('words-grid');
+const emptyMessage = document.getElementById('empty-message');
+const currentLetter = document.getElementById('current-letter');
+const searchInput = document.getElementById('search-input');
+
+const popup = document.getElementById('article-popup');
+
+const popupAnglicism = document.getElementById('popup-anglicism');
+const popupPartOfSpeech = document.getElementById('popup-part-of-speech');
+const popupOriginal = document.getElementById('popup-original');
+const popupVariants = document.getElementById('popup-variants');
+const popupDefinition = document.getElementById('popup-definition');
+const popupReplacements = document.getElementById('popup-replacements');
+
+const closePopup = document.getElementById('close-popup');
+
+
+function sortWordsAlphabetically() {
+
+    const linksArray = Array.from(wordLinks);
+
+    linksArray.sort((a, b) => {
+
+        const wordA = a.dataset.word;
+        const wordB = b.dataset.word;
+
+        return wordA.localeCompare(wordB, 'uk');
+
+    });
+
+    linksArray.forEach(link => {
+        wordsGrid.appendChild(link);
+    });
+
+}
+
+
+function updateEmptyMessage() {
+
+    let visibleCount = 0;
+
+    wordLinks.forEach(link => {
+
+        if (link.style.display !== 'none') {
+            visibleCount++;
+        }
+
+    });
+
+    if (visibleCount === 0) {
+        emptyMessage.style.display = 'block';
+    }
+    else {
+        emptyMessage.style.display = 'none';
+    }
+
+}
+
+
+function resetActiveButtons() {
+
+    document.querySelectorAll('.alphabet-buttons button').forEach(button => {
+        button.classList.remove('active-letter');
+    });
+
+}
+
+
+allButton.addEventListener('click', () => {
+
+    resetActiveButtons();
+
+    allButton.classList.add('active-letter');
+
+    currentLetter.textContent = '# Усі англізми';
+
+    wordLinks.forEach(link => {
+        link.style.display = 'inline-flex';
+    });
+
+    sortWordsAlphabetically();
+
+    updateEmptyMessage();
+
+});
+
+
+letterButtons.forEach(button => {
+
+    button.addEventListener('click', () => {
+
+        resetActiveButtons();
+
+        button.classList.add('active-letter');
+
+        const selectedLetter = button.dataset.letter;
+
+        currentLetter.textContent = '# ' + selectedLetter;
+
+        wordLinks.forEach(link => {
+
+            const wordLetter = link.dataset.letter;
+
+            if (wordLetter === selectedLetter) {
+                link.style.display = 'inline-flex';
+            }
+            else {
+                link.style.display = 'none';
+            }
+
+        });
+
+        sortWordsAlphabetically();
+
+        updateEmptyMessage();
+
+    });
+
+});
+
+
+searchInput.addEventListener('input', () => {
+
+    const searchValue = searchInput.value.trim().toLowerCase();
+
+    resetActiveButtons();
+
+    currentLetter.textContent = '# Результати пошуку';
+
+    wordLinks.forEach(link => {
+
+        const word = link.dataset.word;
+
+        if (word.includes(searchValue)) {
+            link.style.display = 'inline-flex';
+        }
+        else {
+            link.style.display = 'none';
+        }
+
+    });
+
+    sortWordsAlphabetically();
+
+    updateEmptyMessage();
+
+});
+
+
+wordLinks.forEach(link => {
+
+    link.addEventListener('click', async (event) => {
+
+        event.preventDefault();
+
+        const id = link.dataset.id;
+
+        const response = await fetch(`/api/anglicism/${id}`);
+
+        const data = await response.json();
+
+        popupAnglicism.textContent = data.anglicism;
+        popupPartOfSpeech.textContent = data.part_of_speech;
+        popupOriginal.textContent = data.original_spelling;
+        popupVariants.textContent = data.variants.join(', ');
+        popupDefinition.textContent = data.definition;
+
+        popupReplacements.innerHTML = '';
+
+        data.replacements.forEach(replacement => {
+
+            popupReplacements.innerHTML += `
+
+                <details class="equivalent-card">
+
+                    <summary>
+
+                        <span>${replacement.word}</span>
+
+                        <span class="summary-icons">
+
+                            <img class="minus-icon"
+                                 src="/static/images/іконка_мінус.svg"
+                                 alt="" />
+
+                            <img class="plus-icon"
+                                 src="/static/images/іконка_плюсик.svg"
+                                 alt="" />
+
+                        </span>
+
+                    </summary>
+
+                    <div class="equivalent-body">
+
+                        <h4>Тлумачення відповідника</h4>
+
+                        <p>${replacement.definition}</p>
+
+                        <div class="example-card">
+
+                            <h4>Приклад вживання англізма</h4>
+
+                            <p>${replacement.example_anglicism}</p>
+
+                        </div>
+
+                        <div class="example-card">
+
+                            <h4>Приклад вживання відповідника</h4>
+
+                            <p>${replacement.example_replacement}</p>
+
+                        </div>
+
+                    </div>
+
+                </details>
+
+            `;
+
+        });
+
+        window.location.hash = 'article-popup';
+
+    });
+
+});
+
+
+closePopup.addEventListener('click', () => {
+
+    window.location.hash = '';
+
+});
+
+
+document.querySelector('.popup-overlay').addEventListener('click', () => {
+
+    window.location.hash = '';
+
+});
+
+
+const urlParams = new URLSearchParams(window.location.search);
+
+const wordIdFromUrl = urlParams.get('word');
+
+if (wordIdFromUrl) {
+
+    const targetLink = document.querySelector(
+        `.word-link[data-id="${wordIdFromUrl}"]`
+    );
+
+    if (targetLink) {
+
+        targetLink.click();
+
+    }
+
+}
+
+
+// Автоматичне сортування при завантаженні сторінки
+sortWordsAlphabetically();
+
+</script>
 
 </body>
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+
+  <title>Вхід | Адмін-панель</title>
+
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/admin_login.css') }}">
+</head>
+
+<body>
+
+<main class="login-page">
+
+  <img class="logo"
+       src="{{ url_for('static', filename='images/Лого.svg') }}"
+       alt="Платформа Питомо" />
+
+  <section class="login-card">
+
+    <div class="login-card-header">
+
+      <div class="logo-small-box">
+
+        <img src="{{ url_for('static', filename='images/Лого_small.svg') }}"
+             alt="" />
+
+      </div>
+
+      <div class="header-fill"></div>
+
+    </div>
+
+    {% if login_error %}
+
+    <div class="login-error">
+
+      Неправильна електронна пошта або пароль
+
+    </div>
+
+    {% endif %}
+
+    <form class="login-form"
+          method="POST">
+
+      <label>
+
+        Е-пошта
+
+        <input type="email"
+               name="email"
+               placeholder="Введіть електронну пошту" />
+
+      </label>
+
+      <label>
+
+        Пароль
+
+        <input type="password"
+               name="password"
+               placeholder="Введіть пароль" />
+
+      </label>
+
+      <button type="submit">
+        Увійти
+      </button>
+
+    </form>
+
+  </section>
+
+</main>
+
+</body>
+</html>
+</html>
