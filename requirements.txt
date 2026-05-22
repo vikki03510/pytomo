@@ -2,3 +2,4 @@ Flask
 openai
 pymorphy3
 pymorphy3-dicts-uk
+python-dotenv
