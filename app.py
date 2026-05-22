@@ -351,7 +351,7 @@ def load_anglicisms_from_db(db_path: str) -> Dict[str, Dict]:
         a.Англізм,
         a."Частина мови",
         r.Відповідник
-    FROM "Варіянт написання англізма" v
+    FROM "Варіянт_написання_англізма" v
     JOIN Англізм a
         ON v."ID англізма" = a.ID
     LEFT JOIN Відповідник r
