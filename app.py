@@ -87,7 +87,9 @@ def get_anglicisms_count():
 
 
 def get_all_anglicisms():
+
     conn = sqlite3.connect(DB_PATH)
+
     cursor = conn.cursor()
 
     query = """
@@ -116,14 +118,46 @@ def get_all_anglicisms():
     anglicisms = []
 
     for row in rows:
+
         anglicisms.append({
+
             "id": row[0],
+
             "anglicism": row[1],
+
             "part_of_speech": row[2],
+
             "replacement": row[3]
+
         })
 
     return anglicisms
+
+
+# =========================
+# SUGGESTIONS
+# =========================
+
+
+def get_all_suggestions():
+
+    conn = sqlite3.connect(DB_PATH)
+
+    conn.row_factory = sqlite3.Row
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM Пропозиція
+        ORDER BY Англізм COLLATE NOCASE
+    """)
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    return rows
 
 
 # =========================
@@ -946,14 +980,145 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contacts.html")
+@app.route(
+    "/contacts.html",
+    methods=["GET", "POST"]
+)
 def contacts():
-    return render_template("contacts.html")
+
+    if request.method == "POST":
+
+        conn = sqlite3.connect(DB_PATH)
+
+        cursor = conn.cursor()
+
+        first_name = request.form.get(
+            "first_name",
+            ""
+        ).strip()
+
+        last_name = request.form.get(
+            "last_name",
+            ""
+        ).strip()
+
+        email = request.form.get(
+            "email",
+            ""
+        ).strip()
+
+        other_contacts = request.form.get(
+            "other_contacts",
+            ""
+        ).strip()
+
+        message = request.form.get(
+            "message",
+            ""
+        ).strip()
+
+        cursor.execute("""
+            INSERT INTO Повідомлення (
+                "Ім'я",
+                "Прізвище",
+                "Е-пошта",
+                "Инші контакти",
+                Повідомлення
+            )
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            first_name,
+            last_name,
+            email,
+            other_contacts,
+            message
+        ))
+
+        conn.commit()
+
+        conn.close()
+
+        return redirect(
+            url_for("contacts")
+        )
+
+    return render_template(
+        "contacts.html"
+    )
 
 
-@app.route("/suggest.html")
+@app.route(
+    "/suggest.html",
+    methods=["GET", "POST"]
+)
 def suggest():
-    return render_template("suggest.html")
+
+    if request.method == "POST":
+
+        conn = sqlite3.connect(DB_PATH)
+
+        cursor = conn.cursor()
+
+        email = request.form.get(
+            "email",
+            ""
+        ).strip()
+
+        anglicism = request.form.get(
+            "anglicism",
+            ""
+        ).strip()
+
+        variants = request.form.get(
+            "variants",
+            ""
+        ).strip()
+
+        definition_anglicism = request.form.get(
+            "definition_anglicism",
+            ""
+        ).strip()
+
+        replacements = request.form.get(
+            "replacements",
+            ""
+        ).strip()
+
+        definition_replacements = request.form.get(
+            "definition_replacements",
+            ""
+        ).strip()
+
+        cursor.execute("""
+            INSERT INTO Пропозиція (
+                "Е-пошта",
+                Англізм,
+                "Варіянти написання",
+                "Визначення англізма",
+                Відповідники,
+                "Визначення відповідників"
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
+            email,
+            anglicism,
+            variants,
+            definition_anglicism,
+            replacements,
+            definition_replacements
+        ))
+
+        conn.commit()
+
+        conn.close()
+
+        return redirect(
+            url_for("suggest")
+        )
+
+    return render_template(
+        "suggest.html"
+    )
 
 
 @app.route("/admin_login.html", methods=["GET", "POST"])
@@ -1487,29 +1652,137 @@ def admin_edit_anglicism(anglicism_id):
 
 @app.route("/admin_suggestions.html")
 def admin_suggestions():
-    
+
     if not session.get("admin_logged_in"):
         return redirect(url_for("admin_login"))
-    
-    return render_template("admin_suggestions.html")
+
+    suggestions = get_all_suggestions()
+
+    return render_template(
+        "admin_suggestions.html",
+        suggestions=suggestions
+    )
 
 
-@app.route("/admin_edit_suggestion.html")
-def admin_edit_suggestion():
-    
+@app.route(
+    "/admin_edit_suggestion/<int:suggestion_id>"
+)
+def admin_edit_suggestion(suggestion_id):
+
     if not session.get("admin_logged_in"):
         return redirect(url_for("admin_login"))
-    
-    return render_template("admin_edit_suggestion.html")
+
+    conn = sqlite3.connect(DB_PATH)
+
+    conn.row_factory = sqlite3.Row
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM Пропозиція
+        WHERE ID = ?
+    """, (suggestion_id,))
+
+    suggestion = cursor.fetchone()
+
+    conn.close()
+
+    if not suggestion:
+
+        return redirect(
+            url_for("admin_suggestions")
+        )
+
+    return render_template(
+        "admin_edit_suggestion.html",
+        suggestion=suggestion
+    )
 
 
 @app.route("/admin_messages.html")
 def admin_messages():
-    
+
     if not session.get("admin_logged_in"):
         return redirect(url_for("admin_login"))
-    
-    return render_template("admin_messages.html")
+
+    conn = sqlite3.connect(DB_PATH)
+
+    conn.row_factory = sqlite3.Row
+
+    cursor = conn.cursor()
+
+    page = request.args.get("page", 1, type=int)
+
+    per_page = 4
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM Повідомлення
+    """)
+
+    total_messages = cursor.fetchone()[0]
+
+    total_pages = (
+        (total_messages + per_page - 1) // per_page
+    )
+
+    if total_pages == 0:
+        total_pages = 1
+
+    if page > total_pages:
+        page = total_pages
+
+    if page < 1:
+        page = 1
+
+    offset = (page - 1) * per_page
+
+    cursor.execute("""
+        SELECT *
+        FROM Повідомлення
+        ORDER BY ID DESC
+        LIMIT ? OFFSET ?
+    """, (
+        per_page,
+        offset
+    ))
+
+    messages = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        "admin_messages.html",
+        messages=messages,
+        page=page,
+        total_pages=total_pages
+    )
+
+
+@app.route(
+    "/delete_message/<int:message_id>",
+    methods=["POST"]
+)
+def delete_message(message_id):
+
+    if not session.get("admin_logged_in"):
+        return redirect(url_for("admin_login"))
+
+    conn = sqlite3.connect(DB_PATH)
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM Повідомлення
+        WHERE ID = ?
+    """, (message_id,))
+
+    conn.commit()
+
+    conn.close()
+
+    return "", 204
 
 
 @app.route("/api/anglicism/<int:anglicism_id>")
@@ -1615,6 +1888,267 @@ def delete_anglicism(anglicism_id):
     return jsonify({
         "ok": True
     })
+
+
+@app.route(
+    "/add_suggestion_to_database/<int:suggestion_id>",
+    methods=["POST"]
+)
+def add_suggestion_to_database(suggestion_id):
+
+    if not session.get("admin_logged_in"):
+        return redirect(url_for("admin_login"))
+
+    conn = sqlite3.connect(DB_PATH)
+
+    cursor = conn.cursor()
+
+    anglicism = request.form.get(
+        "anglicism",
+        ""
+    ).strip()
+
+    part_of_speech = request.form.get(
+        "part_of_speech",
+        ""
+    ).strip()
+
+    original_spelling = request.form.get(
+        "original_spelling",
+        ""
+    ).strip()
+
+    variants = request.form.get(
+        "variants",
+        ""
+    ).strip()
+
+    definition = request.form.get(
+        "definition",
+        ""
+    ).strip()
+
+    notes = request.form.get(
+        "notes",
+        ""
+    ).strip()
+
+
+    # =========================
+    # ФОРМАТУВАННЯ
+    # =========================
+
+    anglicism = capitalize_first(
+        anglicism
+    )
+
+    part_of_speech = capitalize_first(
+        part_of_speech
+    )
+
+    original_spelling = format_original_spelling(
+        original_spelling
+    )
+
+    definition = format_definition(
+        definition
+    )
+
+    notes = format_note(
+        notes
+    )
+
+
+    # =========================
+    # ID
+    # =========================
+
+    cursor.execute(
+        "SELECT MAX(ID) FROM Англізм"
+    )
+
+    last_id = cursor.fetchone()[0]
+
+    if last_id is None:
+        new_id = 1
+    else:
+        new_id = last_id + 1
+
+
+    # =========================
+    # АНГЛІЗМ
+    # =========================
+
+    cursor.execute("""
+        INSERT INTO Англізм (
+            ID,
+            Англізм,
+            "Частина мови",
+            "Оригінальне написання англізма",
+            Тлумачення,
+            Зауваження
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (
+        new_id,
+        anglicism,
+        part_of_speech,
+        original_spelling,
+        definition,
+        notes
+    ))
+
+    anglicism_id = new_id
+
+
+    # =========================
+    # ВАРІЯНТИ
+    # =========================
+
+    variants_list = [
+
+        v.strip()
+
+        for v in variants.split(",")
+
+        if v.strip()
+
+    ]
+
+    for variant in variants_list:
+
+        variant = capitalize_first(
+            variant
+        )
+
+        if variant.lower() == anglicism.lower():
+            continue
+
+        cursor.execute("""
+            SELECT MAX(ID)
+            FROM Варіянт_написання_англізма
+        """)
+
+        last_variant_id = cursor.fetchone()[0]
+
+        if last_variant_id is None:
+            new_variant_id = 1
+        else:
+            new_variant_id = last_variant_id + 1
+
+        cursor.execute("""
+            INSERT INTO Варіянт_написання_англізма (
+                ID,
+                "ID англізма",
+                "Варіянт написання"
+            )
+            VALUES (?, ?, ?)
+        """, (
+            new_variant_id,
+            anglicism_id,
+            variant
+        ))
+
+
+    # =========================
+    # ВІДПОВІДНИКИ
+    # =========================
+
+    index = 1
+
+    while True:
+
+        replacement = request.form.get(
+            f"replacement_{index}",
+            ""
+        ).strip()
+
+        if not replacement:
+            break
+
+        replacement_definition = request.form.get(
+            f"replacement_definition_{index}",
+            ""
+        ).strip()
+
+        replacement_example = request.form.get(
+            f"replacement_example_{index}",
+            ""
+        ).strip()
+
+        anglicism_example = request.form.get(
+            f"anglicism_example_{index}",
+            ""
+        ).strip()
+        
+        replacement = capitalize_first(
+            replacement
+        )
+
+        replacement_definition = format_definition(
+            replacement_definition
+        )
+
+        replacement_example = format_example(
+            replacement_example
+        )
+
+        anglicism_example = format_example(
+            anglicism_example
+        )
+
+
+        cursor.execute("""
+            SELECT MAX(ID)
+            FROM Відповідник
+        """)
+
+        last_replacement_id = cursor.fetchone()[0]
+
+        if last_replacement_id is None:
+            new_replacement_id = 1
+        else:
+            new_replacement_id = last_replacement_id + 1
+
+        cursor.execute("""
+            INSERT INTO Відповідник (
+                ID,
+                "ID англізма",
+                Відповідник,
+                Тлумачення,
+                "Приклад вживання відповідника",
+                "Приклад вживання англізма"
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
+            new_replacement_id,
+            anglicism_id,
+            replacement,
+            replacement_definition,
+            replacement_example,
+            anglicism_example
+        ))
+
+        index += 1
+
+
+    # =========================
+    # ВИДАЛИТИ ПРОПОЗИЦІЮ
+    # =========================
+
+    cursor.execute("""
+        DELETE FROM Пропозиція
+        WHERE ID = ?
+    """, (suggestion_id,))
+
+
+    conn.commit()
+
+    conn.close()
+
+    return redirect(
+        url_for("admin_database")
+    )
 
 
 load_word_of_the_day()

@@ -200,51 +200,91 @@ body {
   margin-bottom: 0;
 }
 
-.add-form input,
-.add-form textarea,
-.editable-input {
+.editable-field {
   width: 100%;
   margin-top: 8px;
+
   border: 2px solid var(--brown);
   border-radius: 16px;
-  background: var(--bg);
-  padding: 10px 18px;
+
+  background: var(--beige);
+
+  padding: 0 18px;
+
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.editable-field.short {
+  height: 43px;
+
+  align-items: center;
+}
+
+.editable-field.large {
+  min-height: 76px;
+
+  align-items: flex-start;
+
+  padding: 12px 18px;
+}
+
+.editable-text {
+  flex: 1;
+
+  display: block;
+  width: 100%;
+
+  outline: none;
+
   font-family: "Noto Sans Hebrew New", Arial, sans-serif;
   font-size: 18px;
+  line-height: 1.3;
+
   color: var(--dark);
-  outline: none;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+
+  text-align: left;
 }
 
-.add-form input,
-.editable-input {
-  height: 43px;
-}
+.editable-field button {
+  border: none;
+  background: transparent;
 
-.add-form textarea {
-  height: 76px;
-  resize: none;
-  line-height: 1.25;
-}
+  padding: 0;
 
-.editable-input {
-  background: var(--beige);
+  cursor: pointer;
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  
+  margin-left: auto;
 }
 
-.editable-input img {
+.editable-field button img {
   width: 28px;
   height: 28px;
-  transition: filter 0.25s ease;
+
+  transition:
+    filter 0.25s ease,
+    transform 0.25s ease;
 }
 
-.editable-input:hover img {
+.editable-field button:hover img {
   filter: brightness(0) saturate(100%) invert(84%) sepia(21%) saturate(509%) hue-rotate(11deg) brightness(97%) contrast(89%);
+  transform: scale(1.08);
 }
 
-.add-form input:focus,
-.add-form textarea:focus {
+.editable-field:focus-within {
+  background: #ffffff;
   border-color: var(--wine);
 }
 
@@ -390,28 +430,6 @@ body {
 
 .equivalent-block {
   margin-bottom: 28px;
-}
-
-.equivalent-block input,
-.equivalent-block textarea {
-  width: 100%;
-  border: 2px solid var(--brown);
-  border-radius: 16px;
-  background: var(--bg);
-  padding: 10px 18px;
-  font-family: "Noto Sans Hebrew New", Arial, sans-serif;
-  font-size: 18px;
-  color: var(--dark);
-  outline: none;
-  resize: none;
-}
-
-.equivalent-block input {
-  height: 43px;
-}
-
-.equivalent-block textarea {
-  height: 62px;
 }
 
 .delete-equivalent-button {

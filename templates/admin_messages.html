@@ -72,10 +72,13 @@
       <h1>Повідомлення від користувачів</h1>
     </div>
 
-    <article class="message-card">
+    {% for message in messages %}
+
+    <article class="message-card"
+             data-message-id="{{ message['ID'] }}">
 
       <input type="checkbox"
-             id="msg1"
+             id="msg{{ message['ID'] }}"
              class="message-toggle" />
 
       <div class="message-content">
@@ -89,102 +92,167 @@
 
         </button>
 
-        <h2>Тарас Шевченко</h2>
+        <h2>
+          {{ message["Ім'я"] }}
+          {{ message["Прізвище"] }}
+        </h2>
 
         <p class="contact">
-          tarasshevchenko@gmail.com
+          {{ message["Е-пошта"] }}
         </p>
 
+        {% if message["Инші контакти"] %}
+
         <p class="contact">
-          +380123456789
+          {{ message["Инші контакти"] }}
         </p>
+
+        {% endif %}
 
         <p class="message-text">
-          Доброго дня!<br>
-          Хотіла б запропонувати невелике покращення для платформи. Було б дуже зручно додати можливість переглядати історію виправлень або збережені версії тексту після редагування. Це допомогло б користувачам порівнювати зміни та повертатись до попередніх варіантів тексту при потребі. Також було б корисно додати позначення, які саме англізми були замінені.
+          {{ message["Повідомлення"] }}
         </p>
 
-        <label for="msg1"
+        <label for="msg{{ message['ID'] }}"
                class="read-more"></label>
 
       </div>
 
     </article>
 
-    <article class="message-card">
-
-      <input type="checkbox"
-             id="msg2"
-             class="message-toggle" />
-
-      <div class="message-content">
-
-        <button class="delete-button"
-                type="button"
-                data-confirm="Ви впевнені, що хочете видалити повідомлення?">
-
-          <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-               alt="Видалити" />
-
-        </button>
-
-        <h2>Леся Українка</h2>
-
-        <p class="contact">
-          lesyalesya@gmail.com
-        </p>
-
-        <p class="contact">
-          +380987654321
-        </p>
-
-        <p class="message-text">
-          Маю невелику пропозицію щодо платформи. Було б дуже зручно додати можливість підсвічування слів, які система вважає англізмами або небажаними запозиченнями, ще до автоматичного виправлення тексту. Це зробило б процес редагування більш зрозумілим для користувача і допомогло б краще бачити, які саме слова потребують заміни.
-        </p>
-
-        <label for="msg2"
-               class="read-more"></label>
-
-      </div>
-
-    </article>
+    {% endfor %}
 
     <div class="pagination">
 
-      <button class="page-button disabled"
-              type="button">
+      {% set pages_per_group = 4 %}
 
-        «
+      {% set current_group =
+          ((page - 1) // pages_per_group)
+      %}
 
-      </button>
+      {% set start_page =
+          current_group * pages_per_group + 1
+      %}
 
-      <button class="page-button disabled"
-              type="button">
+      {% set end_page =
+          start_page + pages_per_group - 1
+      %}
 
-        ‹
+      {% if end_page > total_pages %}
+        {% set end_page = total_pages %}
+      {% endif %}
 
-      </button>
+      {% if total_pages == 0 %}
 
-      <button class="page-button disabled current-page"
-              type="button">
+        <button class="page-button page-arrow disabled"
+                type="button">«</button>
 
-        1
+        <button class="page-button page-arrow disabled"
+                type="button">‹</button>
 
-      </button>
+        <button class="page-button current-page disabled"
+                type="button">1</button>
 
-      <button class="page-button active-page"
-              type="button">
+        <button class="page-button page-arrow disabled"
+                type="button">›</button>
 
-        ›
+        <button class="page-button page-arrow disabled"
+                type="button">»</button>
 
-      </button>
+      {% else %}
 
-      <button class="page-button active-page"
-              type="button">
+        {% if page > 1 %}
 
-        »
+          <a class="page-button page-arrow active-page"
+             href="{{ url_for(
+                        'admin_messages',
+                        page=1
+                     ) }}">
 
-      </button>
+            «
+
+          </a>
+
+          <a class="page-button page-arrow active-page"
+             href="{{ url_for(
+                        'admin_messages',
+                        page=page-1
+                     ) }}">
+
+            ‹
+
+          </a>
+
+        {% else %}
+
+          <button class="page-button page-arrow disabled"
+                  type="button">«</button>
+
+          <button class="page-button page-arrow disabled"
+                  type="button">‹</button>
+
+        {% endif %}
+
+        {% for p in range(start_page, end_page + 1) %}
+
+          {% if p == page %}
+
+            <button class="page-button page-number current-page"
+                    type="button">
+
+              {{ p }}
+
+            </button>
+
+          {% else %}
+
+            <a class="page-button page-number active-page"
+               href="{{ url_for(
+                          'admin_messages',
+                          page=p
+                       ) }}">
+
+              {{ p }}
+
+            </a>
+
+          {% endif %}
+
+        {% endfor %}
+
+        {% if page < total_pages %}
+
+          <a class="page-button page-arrow active-page"
+             href="{{ url_for(
+                        'admin_messages',
+                        page=page+1
+                     ) }}">
+
+            ›
+
+          </a>
+
+          <a class="page-button page-arrow active-page"
+             href="{{ url_for(
+                        'admin_messages',
+                        page=total_pages
+                     ) }}">
+
+            »
+
+          </a>
+
+        {% else %}
+
+          <button class="page-button page-arrow disabled"
+                  type="button">›</button>
+
+          <button class="page-button page-arrow disabled"
+                  type="button">»</button>
+
+        {% endif %}
+
+      {% endif %}
 
     </div>
 
@@ -263,12 +331,30 @@
     cardToDelete = null;
   });
 
-  confirmYes.addEventListener("click", () => {
-    if (cardToDelete) cardToDelete.remove();
+  confirmYes.addEventListener("click", async () => {
+
+    if (cardToDelete) {
+
+      const messageId =
+        cardToDelete.dataset.messageId;
+
+      await fetch(
+        `/delete_message/${messageId}`,
+        {
+          method: "POST"
+        }
+      );
+
+      cardToDelete.remove();
+
+    }
 
     confirmPopup.classList.remove("show");
+
     cardToDelete = null;
+
   });
+  
 </script>
 
 </body>

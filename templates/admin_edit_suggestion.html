@@ -73,22 +73,31 @@
 
       <h1>Редагування пропозиції англізма</h1>
 
-      <a
-        href="admin_database.html"
+      <button
         class="save-button"
+        type="submit"
+        form="edit-suggestion-form"
         data-confirm="Ви впевнені, що хочете додати англізм до бази даних?"
       >
 
-        <img src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
-             alt="" />
+        <img
+          src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
+          alt=""
+        />
 
         Додати до бази
 
-      </a>
+      </button>
 
     </div>
 
-    <form class="add-form">
+    <form
+      id="edit-suggestion-form"
+      class="add-form"
+      action="{{ url_for('add_suggestion_to_database',
+                          suggestion_id=suggestion['ID']) }}"
+      method="POST"
+    >
 
       <div class="form-row">
 
@@ -96,12 +105,29 @@
 
           Англізм
 
-          <div class="editable-input">
+          <div class="editable-field short">
 
-            <span>Айдентика</span>
+            <span
+              class="editable-text"
+              contenteditable="true"
+              data-input-id="anglicism-input"
+            >{{ suggestion["Англізм"] }}</span>
 
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="" />
+            <input
+              type="hidden"
+              id="anglicism-input"
+              name="anglicism"
+              value="{{ suggestion['Англізм'] }}"
+            >
+
+            <button type="button">
+
+              <img
+                src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                alt="Редагувати"
+              />
+
+            </button>
 
           </div>
 
@@ -111,7 +137,31 @@
 
           Частина мови
 
-          <input type="text" />
+          <div class="editable-field short">
+
+            <span
+              class="editable-text"
+              contenteditable="true"
+              data-input-id="part-of-speech-input"
+            >{{ suggestion["Частина мови"] or '' }}</span>
+
+            <input
+              type="hidden"
+              id="part-of-speech-input"
+              name="part_of_speech"
+              value="{{ suggestion['Частина мови'] or '' }}"
+            >
+
+            <button type="button">
+
+              <img
+                src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                alt="Редагувати"
+              />
+
+            </button>
+
+          </div>
 
         </label>
 
@@ -123,7 +173,31 @@
 
           Написання англійською
 
-          <input type="text" />
+          <div class="editable-field short">
+
+            <span
+              class="editable-text"
+              contenteditable="true"
+              data-input-id="original-spelling-input"
+            >{{ suggestion["Оригінальне написання англізма"] or '' }}</span>
+
+            <input
+              type="hidden"
+              id="original-spelling-input"
+              name="original_spelling"
+              value="{{ suggestion['Оригінальне написання англізма'] or '' }}"
+            >
+
+            <button type="button">
+
+              <img
+                src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                alt="Редагувати"
+              />
+
+            </button>
+
+          </div>
 
         </label>
 
@@ -131,7 +205,31 @@
 
           Варіянти написання англізма через кому
 
-          <input type="text" />
+          <div class="editable-field short">
+
+            <span
+              class="editable-text"
+              contenteditable="true"
+              data-input-id="variants-input"
+            >{{ suggestion["Варіянти написання"] or '' }}</span>
+
+            <input
+              type="hidden"
+              id="variants-input"
+              name="variants"
+              value="{{ suggestion['Варіянти написання'] or '' }}"
+            >
+
+            <button type="button">
+
+              <img
+                src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                alt="Редагувати"
+              />
+
+            </button>
+
+          </div>
 
         </label>
 
@@ -141,7 +239,31 @@
 
         Тлумачення
 
-        <textarea></textarea>
+        <div class="editable-field large">
+
+          <span
+            class="editable-text"
+            contenteditable="true"
+            data-input-id="definition-input"
+          >{{ suggestion["Визначення англізма"] or '' }}</span>
+
+          <input
+            type="hidden"
+            id="definition-input"
+            name="definition"
+            value="{{ suggestion['Визначення англізма'] or '' }}"
+          >
+
+          <button type="button">
+
+            <img
+              src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+              alt="Редагувати"
+            />
+
+          </button>
+
+        </div>
 
       </label>
 
@@ -149,7 +271,31 @@
 
         Зауваження
 
-        <textarea></textarea>
+        <div class="editable-field large">
+
+          <span
+            class="editable-text"
+            contenteditable="true"
+            data-input-id="notes-input"
+          ></span>
+
+          <input
+            type="hidden"
+            id="notes-input"
+            name="notes"
+            value=""
+          >
+
+          <button type="button">
+
+            <img
+              src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+              alt="Редагувати"
+            />
+
+          </button>
+
+        </div>
 
       </label>
 
@@ -163,12 +309,27 @@
               Відповідник 1
             </span>
 
-            <div class="editable-input">
+            <div class="editable-field short">
 
-              <span>Самобутність</span>
+              <span
+                class="editable-text equivalent-word"
+                contenteditable="true"
+              >{{ suggestion["Відповідники"] or '' }}</span>
 
-              <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                   alt="" />
+              <input
+                type="hidden"
+                name="replacement_1"
+                value="{{ suggestion['Відповідники'] or '' }}"
+              >
+
+              <button type="button">
+
+                <img
+                  src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                  alt="Редагувати"
+                />
+
+              </button>
 
             </div>
 
@@ -180,7 +341,29 @@
               Тлумачення 1
             </span>
 
-            <textarea></textarea>
+            <div class="editable-field large">
+
+              <span
+                class="editable-text equivalent-definition"
+                contenteditable="true"
+              >{{ suggestion["Визначення відповідників"] or '' }}</span>
+
+              <input
+                type="hidden"
+                name="replacement_definition_1"
+                value="{{ suggestion['Визначення відповідників'] or '' }}"
+              >
+
+              <button type="button">
+
+                <img
+                  src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                  alt="Редагувати"
+                />
+
+              </button>
+
+            </div>
 
           </label>
 
@@ -190,7 +373,29 @@
               Приклад вживання відповідника 1
             </span>
 
-            <textarea></textarea>
+            <div class="editable-field large">
+
+              <span
+                class="editable-text equivalent-example"
+                contenteditable="true"
+              ></span>
+
+              <input
+                type="hidden"
+                name="replacement_example_1"
+                value=""
+              >
+
+              <button type="button">
+
+                <img
+                  src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                  alt="Редагувати"
+                />
+
+              </button>
+
+            </div>
 
           </label>
 
@@ -200,26 +405,52 @@
               Приклад вживання англізма 1
             </span>
 
-            <textarea></textarea>
+            <div class="editable-field large">
+
+              <span
+                class="editable-text anglicism-example"
+                contenteditable="true"
+              ></span>
+
+              <input
+                type="hidden"
+                name="anglicism_example_1"
+                value=""
+              >
+
+              <button type="button">
+
+                <img
+                  src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+                  alt="Редагувати"
+                />
+
+              </button>
+
+            </div>
 
           </label>
 
-          <button class="delete-equivalent-button"
-                  type="button">
-
+          <button
+            class="delete-equivalent-button"
+            type="button"
+          >
             Видалити відповідник
-
           </button>
 
         </div>
 
       </div>
 
-      <button class="add-equivalent-button"
-              type="button">
+      <button
+        class="add-equivalent-button"
+        type="button"
+      >
 
-        <img src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
-             alt="" />
+        <img
+          src="{{ url_for('static', filename='images/іконка_плюсик.svg') }}"
+          alt=""
+        />
 
         Додати ще один відповідник
 
@@ -278,155 +509,683 @@
 </div>
 
 <script>
+
   const confirmPopup = document.getElementById("confirm-popup");
   const confirmText = document.querySelector(".confirm-text");
   const confirmYes = document.querySelector(".confirm-yes");
   const confirmNo = document.querySelector(".confirm-no");
 
-  const equivalentsContainer = document.getElementById("equivalents-container");
-  const addEquivalentButton = document.querySelector(".add-equivalent-button");
+  const equivalentsContainer =
+    document.getElementById("equivalents-container");
+
+  const addEquivalentButton =
+    document.querySelector(".add-equivalent-button");
 
   let currentAction = null;
   let currentForm = null;
   let blockToDelete = null;
 
-  function openConfirm(text) {
-    confirmText.textContent = text;
-    confirmPopup.classList.add("show");
+
+  function syncEditableFields() {
+
+    document
+      .querySelectorAll(".editable-text[data-input-id]")
+
+      .forEach(element => {
+
+        const inputId = element.dataset.inputId;
+
+        const hiddenInput =
+          document.getElementById(inputId);
+
+        if (!hiddenInput) return;
+
+        element.addEventListener("input", () => {
+
+          hiddenInput.value =
+            element.textContent.trim();
+
+        });
+
+      });
+
+    document
+      .querySelectorAll(".equivalent-block")
+
+      .forEach(block => {
+
+        const wordSpan =
+          block.querySelector(".equivalent-word");
+
+        const wordInput =
+          block.querySelector(
+            'input[name^="replacement_"]'
+          );
+
+        const definitionSpan =
+          block.querySelector(".equivalent-definition");
+
+        const definitionInput =
+          block.querySelector(
+            'input[name^="replacement_definition_"]'
+          );
+
+        const exampleEquivalentSpan =
+          block.querySelector(".equivalent-example");
+
+        const exampleEquivalentInput =
+          block.querySelector(
+            'input[name^="replacement_example_"]'
+          );
+
+        const anglicismExampleSpan =
+          block.querySelector(".anglicism-example");
+
+        const anglicismExampleInput =
+          block.querySelector(
+            'input[name^="anglicism_example_"]'
+          );
+
+        if (wordSpan && wordInput) {
+
+          wordSpan.addEventListener("input", () => {
+
+            wordInput.value =
+              wordSpan.textContent.trim();
+
+          });
+
+        }
+
+        if (definitionSpan && definitionInput) {
+
+          definitionSpan.addEventListener("input", () => {
+
+            definitionInput.value =
+              definitionSpan.textContent.trim();
+
+          });
+
+        }
+
+        if (
+          exampleEquivalentSpan &&
+          exampleEquivalentInput
+        ) {
+
+          exampleEquivalentSpan.addEventListener("input", () => {
+
+            exampleEquivalentInput.value =
+              exampleEquivalentSpan.textContent.trim();
+
+          });
+
+        }
+
+        if (
+          anglicismExampleSpan &&
+          anglicismExampleInput
+        ) {
+
+          anglicismExampleSpan.addEventListener("input", () => {
+
+            anglicismExampleInput.value =
+              anglicismExampleSpan.textContent.trim();
+
+          });
+
+        }
+
+      });
+
   }
 
+
+  function openConfirm(text) {
+
+    confirmText.textContent = text;
+
+    confirmPopup.classList.add("show");
+
+  }
+
+
   function closeConfirm() {
+
     confirmPopup.classList.remove("show");
+
     currentAction = null;
     currentForm = null;
     blockToDelete = null;
+
   }
+
 
   function isBlockFilled(block) {
-    const fieldsFilled = Array.from(block.querySelectorAll("input, textarea"))
-      .some(field => field.value.trim() !== "");
 
-    const editableFilled = Array.from(block.querySelectorAll(".editable-input span"))
-      .some(field => field.textContent.trim() !== "");
+    const editableFilled = Array
+      .from(block.querySelectorAll(".editable-text"))
 
-    return fieldsFilled || editableFilled;
+      .some(field =>
+        field.textContent.trim() !== ""
+      );
+
+    return editableFilled;
+
   }
 
+
   function updateEquivalentNumbers() {
-    const blocks = equivalentsContainer.querySelectorAll(".equivalent-block");
+
+    const blocks =
+      equivalentsContainer.querySelectorAll(
+        ".equivalent-block"
+      );
 
     blocks.forEach((block, index) => {
+
       const number = index + 1;
 
-      block.querySelector(".equivalent-title").textContent = `Відповідник ${number}`;
-      block.querySelector(".meaning-title").textContent = `Тлумачення ${number}`;
-      block.querySelector(".example-equivalent-title").textContent = `Приклад вживання відповідника ${number}`;
-      block.querySelector(".example-anglicism-title").textContent = `Приклад вживання англізма ${number}`;
+      block.querySelector(".equivalent-title").textContent =
+        `Відповідник ${number}`;
+
+      block.querySelector(".meaning-title").textContent =
+        `Тлумачення ${number}`;
+
+      block.querySelector(".example-equivalent-title").textContent =
+        `Приклад вживання відповідника ${number}`;
+
+      block.querySelector(".example-anglicism-title").textContent =
+        `Приклад вживання англізма ${number}`;
+
     });
 
     blocks.forEach(block => {
-      const deleteButton = block.querySelector(".delete-equivalent-button");
-      deleteButton.style.display = blocks.length > 1 ? "flex" : "none";
+
+      const deleteButton =
+        block.querySelector(
+          ".delete-equivalent-button"
+        );
+
+      deleteButton.style.display =
+        blocks.length > 1
+          ? "flex"
+          : "none";
+
     });
+
   }
 
-  function createEquivalentBlock() {
-    const number = equivalentsContainer.querySelectorAll(".equivalent-block").length + 1;
+function initializeEditableButtons(container = document) {
 
-    const block = document.createElement("div");
+  container
+    .querySelectorAll(".editable-field button")
 
-    block.className = "equivalent-block";
+    .forEach(button => {
 
-    block.innerHTML = `
-      <label class="short-field">
-        <span class="equivalent-title">Відповідник ${number}</span>
-        <input type="text" />
-      </label>
+      button.addEventListener("click", () => {
 
-      <label>
-        <span class="meaning-title">Тлумачення ${number}</span>
-        <textarea></textarea>
-      </label>
+        const field =
+          button.closest(".editable-field");
 
-      <label>
-        <span class="example-equivalent-title">Приклад вживання відповідника ${number}</span>
-        <textarea></textarea>
-      </label>
+        const editableText =
+          field.querySelector(".editable-text");
 
-      <label>
-        <span class="example-anglicism-title">Приклад вживання англізма ${number}</span>
-        <textarea></textarea>
-      </label>
+        if (!editableText) return;
 
-      <button class="delete-equivalent-button" type="button">
-        Видалити відповідник
-      </button>
-    `;
+        editableText.focus();
 
-    return block;
-  }
+        const range =
+          document.createRange();
+
+        range.selectNodeContents(editableText);
+
+        range.collapse(false);
+
+        const selection =
+          window.getSelection();
+
+        selection.removeAllRanges();
+
+        selection.addRange(range);
+
+      });
+
+    });
+
+}
+
+
+function initializeEditableInputs(container = document) {
+
+  container
+    .querySelectorAll(".editable-text")
+
+    .forEach(text => {
+
+      text.addEventListener("input", () => {
+
+        const hiddenInput =
+          text.parentElement.querySelector('input[type="hidden"]');
+
+        if (hiddenInput) {
+
+          hiddenInput.value =
+            text.textContent.trim();
+
+        }
+
+      });
+
+    });
+
+}
+
+function initializeEditableButtons(container = document) {
+
+  container
+    .querySelectorAll(".editable-field button")
+
+    .forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        const field =
+          button.closest(".editable-field");
+
+        const editableText =
+          field.querySelector(".editable-text");
+
+        if (!editableText) return;
+
+        editableText.focus();
+
+        const range =
+          document.createRange();
+
+        range.selectNodeContents(editableText);
+
+        range.collapse(false);
+
+        const selection =
+          window.getSelection();
+
+        selection.removeAllRanges();
+
+        selection.addRange(range);
+
+      });
+
+    });
+
+}
+
+
+function initializeEditableInputs(container = document) {
+
+  container
+    .querySelectorAll(".editable-text")
+
+    .forEach(text => {
+
+      text.addEventListener("input", () => {
+
+        const hiddenInput =
+          text.parentElement.querySelector(
+            'input[type="hidden"]'
+          );
+
+        if (hiddenInput) {
+
+          hiddenInput.value =
+            text.textContent.trim();
+
+        }
+
+      });
+
+    });
+
+}
+
+function createEquivalentBlock() {
+
+  const number =
+    equivalentsContainer
+      .querySelectorAll(".equivalent-block")
+      .length + 1;
+
+  const block =
+    document.createElement("div");
+
+  block.className =
+    "equivalent-block";
+
+  block.innerHTML = `
+
+    <label class="short-field">
+
+      <span class="equivalent-title">
+        Відповідник ${number}
+      </span>
+
+      <div class="editable-field short">
+
+        <span
+          class="editable-text equivalent-word"
+          contenteditable="true"
+        ></span>
+
+        <input
+          type="hidden"
+          name="replacement_${number}"
+          value=""
+        >
+
+        <button type="button">
+
+          <img
+            src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+            alt="Редагувати"
+          />
+
+        </button>
+
+      </div>
+
+    </label>
+
+    <label>
+
+      <span class="meaning-title">
+        Тлумачення ${number}
+      </span>
+
+      <div class="editable-field large">
+
+        <span
+          class="editable-text equivalent-definition"
+          contenteditable="true"
+        ></span>
+
+        <input
+          type="hidden"
+          name="replacement_definition_${number}"
+          value=""
+        >
+
+        <button type="button">
+
+          <img
+            src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+            alt="Редагувати"
+          />
+
+        </button>
+
+      </div>
+
+    </label>
+
+    <label>
+
+      <span class="example-equivalent-title">
+        Приклад вживання відповідника ${number}
+      </span>
+
+      <div class="editable-field large">
+
+        <span
+          class="editable-text equivalent-example"
+          contenteditable="true"
+        ></span>
+
+        <input
+          type="hidden"
+          name="replacement_example_${number}"
+          value=""
+        >
+
+        <button type="button">
+
+          <img
+            src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+            alt="Редагувати"
+          />
+
+        </button>
+
+      </div>
+
+    </label>
+
+    <label>
+
+      <span class="example-anglicism-title">
+        Приклад вживання англізма ${number}
+      </span>
+
+      <div class="editable-field large">
+
+        <span
+          class="editable-text anglicism-example"
+          contenteditable="true"
+        ></span>
+
+        <input
+          type="hidden"
+          name="anglicism_example_${number}"
+          value=""
+        >
+
+        <button type="button">
+
+          <img
+            src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
+            alt="Редагувати"
+          />
+
+        </button>
+
+      </div>
+
+    </label>
+
+    <button
+      class="delete-equivalent-button"
+      type="button"
+    >
+      Видалити відповідник
+    </button>
+  `;
+
+  initializeEditableButtons(block);
+
+  initializeEditableInputs(block);
+
+  return block;
+
+}
+
 
   addEquivalentButton.addEventListener("click", () => {
-    equivalentsContainer.appendChild(createEquivalentBlock());
+
+    const newBlock =
+      createEquivalentBlock();
+
+    equivalentsContainer.appendChild(
+      newBlock
+    );
+
     updateEquivalentNumbers();
+
+    syncEditableFields();
+
   });
 
+
   equivalentsContainer.addEventListener("click", event => {
-    const deleteButton = event.target.closest(".delete-equivalent-button");
+
+    const deleteButton =
+      event.target.closest(
+        ".delete-equivalent-button"
+      );
 
     if (!deleteButton) return;
 
-    const blocks = equivalentsContainer.querySelectorAll(".equivalent-block");
+    const blocks =
+      equivalentsContainer.querySelectorAll(
+        ".equivalent-block"
+      );
 
     if (blocks.length <= 1) return;
 
-    const block = deleteButton.closest(".equivalent-block");
+    const block =
+      deleteButton.closest(".equivalent-block");
 
     if (isBlockFilled(block)) {
+
       blockToDelete = block;
-      openConfirm("Ви впевнені, що хочете видалити відповідник?");
-    } else {
-      block.remove();
-      updateEquivalentNumbers();
+
+      openConfirm(
+        "Ви впевнені, що хочете видалити відповідник?"
+      );
+
     }
+
+    else {
+
+      block.remove();
+
+      updateEquivalentNumbers();
+
+    }
+
   });
 
-  document.querySelectorAll("[data-confirm]").forEach(button => {
-    button.addEventListener("click", function(event) {
-      event.preventDefault();
 
-      currentAction = this;
+  document
+    .querySelectorAll("[data-confirm]")
 
-      const formId = this.getAttribute("form");
+    .forEach(button => {
 
-      currentForm = formId
-        ? document.getElementById(formId)
-        : this.closest("form");
+      button.addEventListener("click", function(event) {
 
-      openConfirm(this.dataset.confirm);
+        event.preventDefault();
+
+        currentAction = this;
+
+        const formId =
+          this.getAttribute("form");
+
+        currentForm = formId
+          ? document.getElementById(formId)
+          : this.closest("form");
+
+        openConfirm(this.dataset.confirm);
+
+      });
+
     });
-  });
 
-  confirmNo.addEventListener("click", closeConfirm);
+
+  confirmNo.addEventListener(
+    "click",
+    closeConfirm
+  );
+
 
   confirmYes.addEventListener("click", () => {
+
     confirmPopup.classList.remove("show");
 
     if (blockToDelete) {
+
       blockToDelete.remove();
+
       updateEquivalentNumbers();
-    } else if (currentAction && currentAction.tagName === "A") {
-      window.location.href = currentAction.href;
-    } else if (currentForm) {
+
+    }
+
+    else if (currentForm) {
+
       currentForm.submit();
+
     }
 
     currentAction = null;
     currentForm = null;
     blockToDelete = null;
+
   });
 
+
+  document
+    .querySelectorAll(".editable-field button")
+
+    .forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        const field =
+          button.closest(".editable-field");
+
+        const editableText =
+          field.querySelector(".editable-text");
+
+        if (!editableText) return;
+
+        field.style.background =
+          "#ffffff";
+
+        editableText.focus();
+
+        const range =
+          document.createRange();
+
+        range.selectNodeContents(
+          editableText
+        );
+
+        range.collapse(false);
+
+        const selection =
+          window.getSelection();
+
+        selection.removeAllRanges();
+
+        selection.addRange(range);
+
+      });
+
+    });
+
+
+  document
+    .querySelectorAll(".editable-text")
+
+    .forEach(text => {
+
+      text.addEventListener("blur", () => {
+
+        const field =
+          text.closest(".editable-field");
+
+        field.style.background = "";
+
+      });
+
+    });
+
+
+  syncEditableFields();
+
+  initializeEditableButtons();
+
+  initializeEditableInputs();
+
   updateEquivalentNumbers();
+
 </script>
 
 </body>

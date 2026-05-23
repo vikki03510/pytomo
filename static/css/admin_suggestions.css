@@ -387,12 +387,36 @@ body {
   border: none;
   background: transparent;
   padding: 0;
+
+  color: #540B14;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 18px;
+
+  cursor: pointer;
+
+  transition: color 0.25s ease;
+}
+
+/* цифри */
+
+.page-number {
   font-family: "Nastup Soft", Impact, sans-serif;
   font-size: 22px;
   line-height: 1;
-  color: #540B14;
-  cursor: pointer;
-  transition: color 0.25s ease;
+}
+
+/* стрілки */
+
+.page-arrow {
+  font-family: Arial, sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1;
 }
 
 .page-button.active-page:hover {
@@ -507,4 +531,24 @@ body {
 
 .user-site-button:hover {
   color: #DBD189;
+}
+
+.empty-message {
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  height: 120px;
+
+  border: 2px solid var(--brown);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+
+  font-family: "Nastup Soft", Impact, sans-serif;
+  font-size: 24px;
+  text-transform: uppercase;
+
+  color: var(--brown);
+
+  background: var(--bg);
 }

@@ -95,44 +95,247 @@
 
       <div class="alphabet-row">
 
-        <button class="letter-active">А</button>
-        <button>Б</button>
-        <button>В</button>
-        <button>Г</button>
-        <button>Ґ</button>
-        <button>Д</button>
-        <button>Е</button>
-        <button>Є</button>
-        <button>Ж</button>
-        <button>З</button>
-        <button>И</button>
-        <button>І</button>
-        <button>Ї</button>
-        <button>Й</button>
-        <button>К</button>
-        <button>Л</button>
-        <button>М</button>
+        <button class="letter-button letter-active"
+                data-letter="ВСЕ">
+
+          Все
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="А">
+
+          А
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Б">
+
+          Б
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="В">
+
+          В
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Г">
+
+          Г
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Ґ">
+
+          Ґ
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Д">
+
+          Д
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Е">
+
+          Е
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Є">
+
+          Є
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Ж">
+
+          Ж
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="З">
+
+          З
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="И">
+
+          И
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="І">
+
+          І
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Ї">
+
+          Ї
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Й">
+
+          Й
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="К">
+
+          К
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Л">
+
+          Л
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="М">
+
+          М
+
+        </button>
 
       </div>
 
       <div class="alphabet-row">
 
-        <button>Н</button>
-        <button>О</button>
-        <button>П</button>
-        <button>Р</button>
-        <button>С</button>
-        <button>Т</button>
-        <button>У</button>
-        <button>Ф</button>
-        <button>Х</button>
-        <button>Ц</button>
-        <button>Ч</button>
-        <button>Ш</button>
-        <button>Щ</button>
-        <button>Ь</button>
-        <button>Ю</button>
-        <button>Я</button>
+        <button class="letter-button"
+                data-letter="Н">
+
+          Н
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="О">
+
+          О
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="П">
+
+          П
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Р">
+
+          Р
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="С">
+
+          С
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Т">
+
+          Т
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="У">
+
+          У
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Ф">
+
+          Ф
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Х">
+
+          Х
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Ц">
+
+          Ц
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Ч">
+
+          Ч
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Ш">
+
+          Ш
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Щ">
+
+          Щ
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Ь">
+
+          Ь
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Ю">
+
+          Ю
+
+        </button>
+
+        <button class="letter-button"
+                data-letter="Я">
+
+          Я
+
+        </button>
 
       </div>
 
@@ -150,229 +353,61 @@
 
     </div>
 
-    <div class="database-grid">
+	<div class="database-grid">
 
-      <div class="word-row">
+	  {% for suggestion in suggestions %}
 
-        <span>адмін</span>
+	  <div class="word-row"
+		   data-id="{{ suggestion['ID'] }}"
+		   data-letter="{{ suggestion['Англізм'][0]|upper }}"
+		   data-word="{{ suggestion['Англізм']|lower }}">
 
-        <div class="actions">
+		<span>
 
-          <a href="{{ url_for('admin_edit_suggestion') }}"
-             class="icon-button">
+		  {{ suggestion["Англізм"] }}
 
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
+		</span>
 
-          </a>
+		<div class="actions">
 
-          <button class="icon-button delete-item-button"
-                  type="button"
-                  data-confirm="Ви впевнені, що хочете видалити англізм з пропозицій?">
+		  <a href="{{ url_for('admin_edit_suggestion',
+							  suggestion_id=suggestion['ID']) }}"
+			 class="icon-button">
 
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
+			<img src="{{ url_for('static',
+								 filename='images/іконка_редагувати.svg') }}"
+				 alt="Редагувати" />
 
-          </button>
+		  </a>
 
-        </div>
+		  <button class="icon-button delete-item-button"
+				  type="button"
+				  data-id="{{ suggestion['ID'] }}"
+				  data-confirm="Ви впевнені, що хочете видалити англізм з пропозицій?">
 
-      </div>
+			<img src="{{ url_for('static',
+								 filename='images/іконка_смітник.svg') }}"
+				 alt="Видалити" />
 
-      <div class="word-row">
+		  </button>
 
-        <span>артбук</span>
+		</div>
 
-        <div class="actions">
+	  </div>
 
-          <a href="{{ url_for('admin_edit_suggestion') }}"
-             class="icon-button">
+	  {% endfor %}
 
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
+	</div>
+	
+	<div id="empty-message"
+     class="empty-message">
 
-          </a>
+  Список порожній
 
-          <button class="icon-button delete-item-button"
-                  type="button"
-                  data-confirm="Ви впевнені, що хочете видалити англізм з пропозицій?">
+	</div>
 
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="word-row">
-
-        <span>аерогриль</span>
-
-        <div class="actions">
-
-          <a href="{{ url_for('admin_edit_suggestion') }}"
-             class="icon-button">
-
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
-
-          </a>
-
-          <button class="icon-button delete-item-button"
-                  type="button"
-                  data-confirm="Ви впевнені, що хочете видалити англізм з пропозицій?">
-
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="word-row">
-
-        <span>асист</span>
-
-        <div class="actions">
-
-          <a href="{{ url_for('admin_edit_suggestion') }}"
-             class="icon-button">
-
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
-
-          </a>
-
-          <button class="icon-button delete-item-button"
-                  type="button"
-                  data-confirm="Ви впевнені, що хочете видалити англізм з пропозицій?">
-
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="word-row">
-
-        <span>айдентика</span>
-
-        <div class="actions">
-
-          <a href="{{ url_for('admin_edit_suggestion') }}"
-             class="icon-button">
-
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
-
-          </a>
-
-          <button class="icon-button delete-item-button"
-                  type="button"
-                  data-confirm="Ви впевнені, що хочете видалити англізм з пропозицій?">
-
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="word-row">
-
-        <span>атач</span>
-
-        <div class="actions">
-
-          <a href="{{ url_for('admin_edit_suggestion') }}"
-             class="icon-button">
-
-            <img src="{{ url_for('static', filename='images/іконка_редагувати.svg') }}"
-                 alt="Редагувати" />
-
-          </a>
-
-          <button class="icon-button delete-item-button"
-                  type="button"
-                  data-confirm="Ви впевнені, що хочете видалити англізм з пропозицій?">
-
-            <img src="{{ url_for('static', filename='images/іконка_смітник.svg') }}"
-                 alt="Видалити" />
-
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="pagination">
-
-      <button class="page-button disabled"
-              type="button">
-
-        «
-
-      </button>
-
-      <button class="page-button disabled"
-              type="button">
-
-        ‹
-
-      </button>
-
-      <button class="page-button disabled current-page"
-              type="button">
-
-        1
-
-      </button>
-
-      <button class="page-button active-page"
-              type="button">
-
-        2
-
-      </button>
-
-      <button class="page-button active-page"
-              type="button">
-
-        3
-
-      </button>
-
-      <button class="page-button active-page"
-              type="button">
-
-        4
-
-      </button>
-
-      <button class="page-button active-page"
-              type="button">
-
-        ›
-
-      </button>
-
-      <button class="page-button active-page"
-              type="button">
-
-        »
-
-      </button>
+    <div class="pagination"
+         id="pagination">
 
     </div>
 
@@ -427,36 +462,444 @@
 </div>
 
 <script>
+
   const confirmPopup = document.getElementById("confirm-popup");
+
   const confirmText = document.querySelector(".confirm-text");
+
   const confirmYes = document.querySelector(".confirm-yes");
+
   const confirmNo = document.querySelector(".confirm-no");
+
+  const searchInput = document.querySelector(
+    ".admin-search-form input"
+  );
+
+  const letterButtons = document.querySelectorAll(
+    ".letter-button"
+  );
+
+  const pagination = document.querySelector(
+    ".pagination"
+  );
+
+  const databaseGrid = document.querySelector(
+    ".database-grid"
+  );
+
+
+  // =========================
+  // ДОДАЄМО ЛІТЕРИ СЛОВАМ
+  // =========================
+
+  const rows = Array.from(
+    document.querySelectorAll(".word-row")
+  );
+
+  rows.forEach(row => {
+
+    const word = row.querySelector("span")
+      .textContent
+      .trim();
+
+    row.dataset.word = word.toLowerCase();
+
+    row.dataset.letter = word[0].toUpperCase();
+
+  });
+
+
+  // =========================
+  // ОНОВЛЮЄМО СПИСОК
+  // =========================
+
+  let allRows = Array.from(
+    document.querySelectorAll(".word-row")
+  );
+
+  let currentLetter = "ВСЕ";
+
+  let currentPage = 1;
+
+  const rowsPerPage = 6;
 
   let rowToDelete = null;
 
-  document.querySelectorAll("[data-confirm]").forEach(button => {
-    button.addEventListener("click", event => {
-      event.preventDefault();
 
-      confirmText.textContent = button.dataset.confirm;
+  // =========================
+  // ФІЛЬТР
+  // =========================
 
-      rowToDelete = button.closest(".word-row");
+function getFilteredRows() {
 
-      confirmPopup.classList.add("show");
-    });
+  const searchValue = searchInput.value
+    .trim()
+    .toLowerCase();
+
+  return allRows.filter(row => {
+
+    const matchesLetter =
+
+      currentLetter === "ВСЕ"
+
+      ||
+
+      row.dataset.letter === currentLetter;
+
+    const matchesSearch =
+      row.dataset.word.includes(searchValue);
+
+    return matchesLetter && matchesSearch;
+
   });
+
+}
+
+
+// =========================
+// РЕНДЕР РЯДКІВ
+// =========================
+
+function renderRows() {
+
+  const filteredRows = getFilteredRows();
+
+  const emptyMessage =
+    document.getElementById("empty-message");
+
+  allRows.forEach(row => {
+    row.style.display = "none";
+  });
+
+  const start =
+    (currentPage - 1) * rowsPerPage;
+
+  const end =
+    start + rowsPerPage;
+
+  filteredRows
+    .slice(start, end)
+    .forEach(row => {
+      row.style.display = "";
+    });
+
+
+  // =========================
+  // СПИСОК ПОРОЖНІЙ
+  // =========================
+
+  if (filteredRows.length === 0) {
+
+    emptyMessage.style.display = "flex";
+
+  } else {
+
+    emptyMessage.style.display = "none";
+
+  }
+
+  renderPagination(filteredRows.length);
+
+  attachDeleteEvents();
+
+}
+
+
+// =========================
+// ПАГІНАЦІЯ
+// =========================
+
+function renderPagination(totalRows) {
+
+  pagination.innerHTML = "";
+
+  const totalPages = Math.ceil(
+    totalRows / rowsPerPage
+  );
+
+  if (totalPages <= 1) {
+    return;
+  }
+
+
+  // =========================
+  // « ПЕРША
+  // =========================
+
+  const firstButton =
+    document.createElement("button");
+
+  firstButton.type = "button";
+
+  firstButton.innerHTML = "&laquo;";
+
+  firstButton.className =
+    currentPage === 1
+      ? "page-button page-arrow disabled"
+	  : "page-button page-arrow active-page";
+
+  firstButton.disabled =
+    currentPage === 1;
+
+  firstButton.addEventListener("click", () => {
+
+    currentPage = 1;
+
+    renderRows();
+
+  });
+
+  pagination.appendChild(firstButton);
+
+
+  // =========================
+  // ‹ НАЗАД
+  // =========================
+
+  const prevButton =
+    document.createElement("button");
+
+  prevButton.type = "button";
+
+  prevButton.innerHTML = "&lsaquo;";
+
+  prevButton.className =
+    currentPage === 1
+      ? "page-button page-arrow disabled"
+	  : "page-button page-arrow active-page";
+
+  prevButton.disabled =
+    currentPage === 1;
+
+  prevButton.addEventListener("click", () => {
+
+    if (currentPage > 1) {
+
+      currentPage--;
+
+      renderRows();
+
+    }
+
+  });
+
+  pagination.appendChild(prevButton);
+
+
+  // =========================
+  // ТІЛЬКИ 4 СТОРІНКИ
+  // =========================
+
+  let startPage =
+    Math.max(currentPage - 1, 1);
+
+  let endPage =
+    Math.min(startPage + 3, totalPages);
+
+  if (endPage - startPage < 3) {
+
+    startPage =
+      Math.max(endPage - 3, 1);
+
+  }
+
+
+  for (let i = startPage; i <= endPage; i++) {
+
+    const button =
+      document.createElement("button");
+
+    button.type = "button";
+
+    button.textContent = i;
+
+    button.className =
+      i === currentPage
+        ? "page-button page-number disabled current-page"
+        : "page-button page-number active-page";
+
+    button.addEventListener("click", () => {
+
+      currentPage = i;
+
+      renderRows();
+
+    });
+
+    pagination.appendChild(button);
+
+  }
+
+
+  // =========================
+  // › ВПЕРЕД
+  // =========================
+
+  const nextButton =
+    document.createElement("button");
+
+  nextButton.type = "button";
+
+  nextButton.innerHTML = "&rsaquo;";
+
+  nextButton.className =
+    currentPage === totalPages
+      ? "page-button page-arrow disabled"
+	  : "page-button page-arrow active-page";
+
+  nextButton.disabled =
+    currentPage === totalPages;
+
+  nextButton.addEventListener("click", () => {
+
+    if (currentPage < totalPages) {
+
+      currentPage++;
+
+      renderRows();
+
+    }
+
+  });
+
+  pagination.appendChild(nextButton);
+
+
+  // =========================
+  // » ОСТАННЯ
+  // =========================
+
+  const lastButton =
+    document.createElement("button");
+
+  lastButton.type = "button";
+
+  lastButton.innerHTML = "&raquo;";
+
+  lastButton.className =
+    currentPage === totalPages
+      ? "page-button page-arrow disabled"
+	  : "page-button page-arrow active-page";
+
+  lastButton.disabled =
+    currentPage === totalPages;
+
+  lastButton.addEventListener("click", () => {
+
+    currentPage = totalPages;
+
+    renderRows();
+
+  });
+
+  pagination.appendChild(lastButton);
+
+}
+
+
+  // =========================
+  // ПОШУК
+  // =========================
+
+  searchInput.addEventListener("input", () => {
+
+    currentPage = 1;
+
+    renderRows();
+
+  });
+
+
+  // =========================
+  // ЛІТЕРИ
+  // =========================
+
+  letterButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      letterButtons.forEach(btn => {
+        btn.classList.remove("letter-active");
+      });
+
+      button.classList.add("letter-active");
+
+      currentLetter =
+        button.dataset.letter;
+
+      currentPage = 1;
+
+      renderRows();
+
+    });
+
+  });
+
+
+  // =========================
+  // DELETE
+  // =========================
+
+  function attachDeleteEvents() {
+
+    document.querySelectorAll("[data-confirm]")
+      .forEach(button => {
+
+        button.onclick = event => {
+
+          event.preventDefault();
+
+          confirmText.textContent =
+            button.dataset.confirm;
+
+          rowToDelete =
+            button.closest(".word-row");
+
+          confirmPopup.classList.add("show");
+
+        };
+
+      });
+
+  }
+
 
   confirmNo.addEventListener("click", () => {
+
     confirmPopup.classList.remove("show");
+
     rowToDelete = null;
+
   });
+
 
   confirmYes.addEventListener("click", () => {
-    if (rowToDelete) rowToDelete.remove();
+
+    if (rowToDelete) {
+
+      rowToDelete.remove();
+
+      allRows = Array.from(
+        document.querySelectorAll(".word-row")
+      );
+
+      renderRows();
+
+    }
 
     confirmPopup.classList.remove("show");
+
     rowToDelete = null;
+
   });
+
+
+  // =========================
+  // START
+  // =========================
+
+  renderRows();
+
 </script>
 
 </body>

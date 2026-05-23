@@ -94,8 +94,8 @@
       </div>
 
       <form class="suggest-form"
-            action="#"
-            method="post">
+			action="{{ url_for('suggest') }}"
+			method="post">
 
         <label>
 
@@ -109,7 +109,8 @@
           </span>
 
           <input type="email"
-                 placeholder="tarasshevchenko@gmail.com" />
+				 name="email"
+				 placeholder="tarasshevchenko@gmail.com" />
 
         </label>
 
@@ -125,7 +126,8 @@
           </span>
 
           <input type="text"
-                 placeholder="Гайпувати" />
+				 name="anglicism"
+				 placeholder="Гайпувати" />
 
         </label>
 
@@ -134,7 +136,8 @@
           Інші варіянти написання англізма
 
           <input type="text"
-                 placeholder="Хайпувати" />
+				 name="variants"
+				 placeholder="Хайпувати" />
 
         </label>
 
@@ -142,7 +145,8 @@
 
           Визначення англізма
 
-          <textarea placeholder="Штучно створювати ажіотаж, розголос або галас навколо певної теми..."></textarea>
+          <textarea name="definition_anglicism"
+					placeholder="Штучно створювати ажіотаж..."></textarea>
 
         </label>
 
@@ -158,6 +162,7 @@
           </span>
 
           <input type="text"
+				 name="replacements"
                  placeholder="Галасувати, здіймати галас" />
 
         </label>
@@ -166,7 +171,8 @@
 
           Визначення відповідників через кому
 
-          <textarea placeholder="Виявляти підвищений інтерес до якого-небудь питання..."></textarea>
+          <textarea name="definition_replacements"
+					placeholder="Виявляти підвищений інтерес до якого-небудь питання..."></textarea>
 
         </label>
 
