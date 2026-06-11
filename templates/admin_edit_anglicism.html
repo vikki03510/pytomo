@@ -947,53 +947,41 @@
 
   });
 
-document
-  .querySelectorAll(".editable-field button")
+document.addEventListener("click", event => {
+  const editButton = event.target.closest(".editable-field button");
 
-  .forEach(button => {
+  if (!editButton) return;
 
-    button.addEventListener("click", () => {
+  const field = editButton.closest(".editable-field");
+  const editableText = field.querySelector(".editable-text");
 
-      const field = button.closest(".editable-field");
+  if (!editableText) return;
 
-      const editableText = field.querySelector(".editable-text");
+  field.style.background = "#ffffff";
 
-      if (!editableText) return;
+  editableText.focus();
 
-      field.style.background = "#ffffff";
+  const range = document.createRange();
+  range.selectNodeContents(editableText);
+  range.collapse(false);
 
-      editableText.focus();
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+});
 
-      const range = document.createRange();
 
-      range.selectNodeContents(editableText);
+document.addEventListener("focusout", event => {
+  const editableText = event.target.closest(".editable-text");
 
-      range.collapse(false);
+  if (!editableText) return;
 
-      const selection = window.getSelection();
+  const field = editableText.closest(".editable-field");
 
-      selection.removeAllRanges();
-
-      selection.addRange(range);
-
-    });
-
-  });
-
-document
-  .querySelectorAll(".editable-text")
-
-  .forEach(text => {
-
-    text.addEventListener("blur", () => {
-
-      const field = text.closest(".editable-field");
-
-      field.style.background = "";
-
-    });
-
-  });
+  if (field) {
+    field.style.background = "";
+  }
+});
 
   syncEditableFields();
 

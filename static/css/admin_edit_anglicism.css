@@ -478,3 +478,18 @@ body {
   outline: none;
   box-shadow: none;
 }
+
+.editable-field .editable-text {
+  display: block;
+  width: 100%;
+  min-height: 24px;
+  cursor: text;
+}
+
+.editable-field.large .editable-text {
+  min-height: 52px;
+}
+
+.editable-field.short .editable-text {
+  min-height: 24px;
+}

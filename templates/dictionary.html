@@ -519,7 +519,7 @@ wordLinks.forEach(link => {
 
                             <h4>Приклад вживання англізма</h4>
 
-                            <p>${replacement.example_anglicism}</p>
+                            <p>${replacement.example_anglicism || ""}</p>
 
                         </div>
 
@@ -527,7 +527,7 @@ wordLinks.forEach(link => {
 
                             <h4>Приклад вживання відповідника</h4>
 
-                            <p>${replacement.example_replacement}</p>
+                            <p>${replacement.example_equivalent || replacement.example_replacement || ""}</p>
 
                         </div>
 
