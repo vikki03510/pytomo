@@ -257,27 +257,25 @@ body {
 }
 
 .letter-badge {
-  min-width: 180px;
-  width: fit-content;
-  height: 46px;
-  padding: 0 18px;
-
-  background: var(--yellow);
-  border-radius: 12px;
-  color: var(--wine);
-
-  font-family: "Nastup Soft", Impact, sans-serif;
-  font-size: 24px;
-  letter-spacing: 0.8px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+
+  min-height: 46px;
+  padding: 0 28px;
+
+  background: var(--yellow);
+  border-radius: 18px;
+
+  color: var(--wine);
+  font-family: "Nastup Soft", Impact, sans-serif;
+  font-size: 24px;
+
+  white-space: nowrap;
+  width: fit-content;
 
   margin-bottom: 34px;
 
-  white-space: nowrap;
   text-shadow: 0 0 0.25px currentColor;
 }
 

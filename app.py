@@ -199,11 +199,10 @@ def get_anglicism_by_id(anglicism_id):
 
     replacements_query = """
     SELECT
-        ID,
         Відповідник,
         Тлумачення,
-        "Приклад вживання відповідника",
-        "Приклад вживання англізма"
+        "Приклад вживання англізма",
+        "Приклад вживання відповідника"
     FROM Відповідник
     WHERE "ID англізма" = ?
     """
@@ -214,12 +213,12 @@ def get_anglicism_by_id(anglicism_id):
     replacements = []
 
     for item in replacements_rows:
+
         replacements.append({
-            "id": item[0],
-            "word": item[1],
-            "definition": item[2],
-            "example_equivalent": item[3],
-            "example_anglicism": item[4]
+            "word": item[0],
+            "definition": item[1],
+            "example_anglicism": item[2],
+            "example_equivalent": item[3]
         })
 
     conn.close()
@@ -877,13 +876,23 @@ def format_definition(text):
     if not text:
         return ""
 
-    # прибираємо лапки тільки з країв, якщо вони випадково є
-    quote_chars = "«»“”„‟\"'‘’`"
+    source = ""
 
-    while len(text) >= 2 and text[0] in quote_chars and text[-1] in quote_chars:
-        text = text[1:-1].strip()
+    if "(" in text and text.endswith(")"):
 
-    # крапку в кінці теж не додаємо автоматично
+        split_index = text.rfind("(")
+
+        source = text[split_index:].strip()
+
+        text = text[:split_index].strip()
+
+    text = text.rstrip(".")
+
+    text = f"‘{text}’"
+
+    if source:
+        text += f" {source}"
+
     return text
 
 

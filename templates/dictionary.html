@@ -466,6 +466,8 @@ wordLinks.forEach(link => {
 
         const data = await response.json();
 
+        console.log(data);
+
         popupAnglicism.textContent = data.anglicism;
         popupPartOfSpeech.textContent = data.part_of_speech;
         popupOriginal.textContent = data.original_spelling;
@@ -519,7 +521,7 @@ wordLinks.forEach(link => {
 
                             <h4>Приклад вживання англізма</h4>
 
-                            <p>${replacement.example_anglicism || ""}</p>
+                            <p>${replacement.example_anglicism}</p>
 
                         </div>
 
@@ -527,7 +529,7 @@ wordLinks.forEach(link => {
 
                             <h4>Приклад вживання відповідника</h4>
 
-                            <p>${replacement.example_equivalent || replacement.example_replacement || ""}</p>
+                            <p>${replacement.example_equivalent || replacement.example_replacement || ''}</p>
 
                         </div>
 
@@ -559,6 +561,9 @@ document.querySelector('.popup-overlay').addEventListener('click', () => {
 
 });
 
+if (window.location.hash === '#article-popup') {
+    window.location.hash = '';
+}
 
 const urlParams = new URLSearchParams(window.location.search);
 
